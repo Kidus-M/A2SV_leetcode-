@@ -16,22 +16,20 @@ x -= 1
 y -= 1
 
 visited = [[[False for _ in range(m)] for _ in range(n)] for _ in range(k)]
-maxx = 0
-directions = [(0, 0, 1), (0, 0, -1),
-              (0, 1, 0), (0, -1, 0),
-              (1, 0, 0), (-1, 0, 0)]
+count = 0
 
+def dfs(z, i, j):
+    global count
+    if not (0 <= z < k and 0 <= i < n and 0 <= j < m):
+        return
+    if visited[z][i][j] or grid[z][i][j] == '#':
+        return
 
-def dfs(z, i, j, time):
-    global maxx
     visited[z][i][j] = True
-    maxx = max(maxx, time) + 1
-    for dz, dx, dy in directions:
-        nz, ni, nj = dz + z, i + dx, j + dy
-        if 0 <= nz < k and 0 <= ni < n and 0 <= nj < m:
-            if not visited[nz][ni][nj] and grid[nz][ni][nj] == ".":
-                dfs(nz, ni, nj, time + 1)
+    count += 1
 
+    for dz, dx, dy in [(-1, 0, 0), (1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, -1), (0, 0, 1)]:
+        dfs(z + dz, i + dx, j + dy)
 
-dfs(0, x, y, 0)
-print(maxx)
+dfs(0, x, y)
+print(count)
