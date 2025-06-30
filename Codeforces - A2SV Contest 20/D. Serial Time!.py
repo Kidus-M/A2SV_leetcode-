@@ -6,6 +6,7 @@ for _ in range(k):
         if line:
             break
     layer=[]
+
     layer.append(list(line))
     for _ in range(n):
         line=input().strip()
