@@ -13,6 +13,7 @@ for _ in range(k):
         layer.append(list(line))
     grid.append(layer)
 x, y = map(int, input().split())
+
 x -= 1
 y -= 1
 
