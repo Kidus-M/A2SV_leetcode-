@@ -48,7 +48,7 @@ if not adj:
 
 
 x,y=start
-ans=""
+ans=[]
 
 remaining=k
 while remaining >0:
@@ -57,7 +57,7 @@ while remaining >0:
         nx, ny = x + dx[d], y + dy[d]
         if 0 <= nx < n and 0 <= ny < m and grid[nx][ny] != "*":
             if dist[nx][ny]!= -1 and dist[nx][ny]<= remaining -1:
-                ans += dirs[d]
+                ans.append(dirs[d])
                 x,y=nx,ny
                 remaining -=1
                 moved=True
@@ -67,7 +67,7 @@ while remaining >0:
         exit()
 
 
-print(ans)
+print("".join(ans))
 
 
 

@@ -1,43 +1,13 @@
+from collections import deque
 import sys
 input=sys.stdin.readline
 
 n ,m,k=map(int,input().split())
 grid=[list(input()) for _ in range(n)]
 
-
-def isvalid(x,y):
-    return 0<=x<n and 0<=y<m
-
-def hasmoves(x,y,grid):
-    dx = [1, 0, 0, -1]
-    dy = [0, -1, 1, 0]
-    for d in range(4):
-        if isvalid(x+dx,y+dy) and grid[x][y]!="*":
-            return True
-    return False
-def canreturn(x,y,remaining,grid,startx,starty):
-    return remaining>=abs(x-startx)+abs(y-starty)
-dirs=["D","L","R","U"]
-dx=[1,0,0,-1]
-dy=[0,-1,1,0]
-def dfs(x,y,steps,path,visited):
-    if steps ==k :
-        return path if canreturn(x,y,k-steps,grid,startx,starty) else None
-    if steps >k:
-        return None
-
-    for d in range(4):
-        nx, ny = x + dx[d], y + dy[d]
-        if isvalid(nx,ny) and (nx,ny) not in visited:
-            newpath=path+dirs[d]
-            result=dfs(nx,ny,steps+1,newpath,visited)
-            if result:
-                return result
-            visited.remove((nx,ny))
-    return None
-
-
-
+if k % 2 ==1:
+    print("IMPOSSIBLE")
+    exit()
 startx=-1
 for i in range(n):
     for j in range(m):
@@ -47,10 +17,57 @@ for i in range(n):
             break
     if startx!=-1:
         break
-if k % 2 ==1:
+dirs=["D","L","R","U"]
+dx=[1,0,0,-1]
+dy=[0,-1,1,0]
+
+
+
+dist=[[-1] *m for _ in range(n)]
+q=deque()
+q.append(start)
+dist[start[0]][start[1]]=0
+while q:
+    x,y=q.popleft()
+    for d in range(4):
+        nx, ny=x+dx[d], y+dy[d]
+        if 0<=nx<n and 0<=ny<m and grid[nx][ny]!="*" and dist[nx][ny]==-1:
+            dist[nx][ny]=dist[x][y] +1
+            q.append((nx,ny))
+
+
+adj=False
+for d in range(4):
+    nx, ny = x + dx[d], y + dy[d]
+    if 0 <= nx < n and 0 <= ny < m and grid[nx][ny] != "*":
+        adj=True
+        break
+if not adj:
     print("IMPOSSIBLE")
     exit()
-visisted={start}
-startx,starty=start
-ans=dfs(startx,starty,1,dirs[0],visisted)
-print(ans if ans else "IMPOSSIBLE")
+
+
+x,y=start
+ans=""
+
+remaining=k
+while remaining >0:
+    moved=False
+    for d in range(4):
+        nx, ny = x + dx[d], y + dy[d]
+        if 0 <= nx < n and 0 <= ny < m and grid[nx][ny] != "*":
+            if dist[nx][ny]!= -1 and dist[nx][ny]<= remaining -1:
+                ans += dirs[d]
+                x,y=nx,ny
+                remaining -=1
+                moved=True
+                break
+    if not moved:
+        print("IMPOSSIBLE")
+        exit()
+
+
+print(ans)
+
+
+
