@@ -1,66 +1,56 @@
 import sys
 input=sys.stdin.readline
 
-t = int(input())
-for _ in range(t):
-    n, m = map(int, input().split())
-    edges = []
-    graph = [[] for _ in range(n)]
+n ,m,k=map(int,input().split())
+grid=[list(input()) for _ in range(n)]
 
-    for _ in range(m):
-        u, v = map(int, input().split())
-        u-= 1
-        v-=1
-        edges.append((u, v))
-        graph[u].append(v)
-        graph[v].append(u)
 
-        timer=[0]
-        tin=[-1]*n
-        low=[-1]*n
+def isvalid(x,y):
+    return 0<=x<n and 0<=y<m
 
-        bridges=[]
+def hasmoves(x,y,grid):
+    dx = [1, 0, 0, -1]
+    dy = [0, -1, 1, 0]
+    for d in range(4):
+        if isvalid(x+dx,y+dy) and grid[x][y]!="*":
+            return True
+    return False
+def canreturn(x,y,remaining,grid,startx,starty):
+    return remaining>=abs(x-startx)+abs(y-starty)
+dirs=["D","L","R","U"]
+dx=[1,0,0,-1]
+dy=[0,-1,1,0]
+def dfs(x,y,steps,path,visited):
+    if steps ==k :
+        return path if canreturn(x,y,k-steps,grid,startx,starty) else None
+    if steps >k:
+        return None
 
-        def dfs(v,p):
-            tin[v]=low[v]=timer[0]
+    for d in range(4):
+        nx, ny = x + dx[d], y + dy[d]
+        if isvalid(nx,ny) and (nx,ny) not in visited:
+            newpath=path+dirs[d]
+            result=dfs(nx,ny,steps+1,newpath,visited)
+            if result:
+                return result
+            visited.remove((nx,ny))
+    return None
 
-            timer[0]+=1
-            for to in graph[v]:
-                if to ==p:
-                    continue
-                if tin[to]!=-1:
-                    low[v]=min(low[v],tin[to])
-                else:
-                    dfs(to,v)
-                    low[v]=min(low[v],low[to])
-                    if low[to]>tin[v]:
-                        bridges.append((v,to))
-        dfs(0,-1)
 
-        if not bridges:
-            print(n*(n-1)//2)
 
-        visited=[False]*n
-        minn = float('inf')
-
-        def dfsS(v,bu,bv):
-            visited[v]=True
-            size=1
-            for to in graph[v]:
-                if (v==bu and to ==bv) or (v==bv and to==bu):
-                    continue
-                if not visited[to]:
-                    size += dfsS(to,bu,bv)
-
-            return size
-
-        total=n*(n-1)//2
-        for u, v in bridges:
-            visited=[False]*n
-            sa=dfsS(u,u,v)
-            sb=n-sa
-            unreachable=sa*sb
-            reach=total-unreachable
-            minn=min(minn,reach)
-
-        print(minn)
+startx=-1
+for i in range(n):
+    for j in range(m):
+        if grid[i][j]=="X":
+            startx=i
+            start=(i,j)
+            break
+    if startx!=-1:
+        break
+if k % 2 ==1:
+    print("IMPOSSIBLE")
+    exit()
+visisted={start}
+startx,starty=start
+ans=dfs(startx,starty,1,dirs[0],visisted)
+print(ans if ans else "IMPOSSIBLE")
