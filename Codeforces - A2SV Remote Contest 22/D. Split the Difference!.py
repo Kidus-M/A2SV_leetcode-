@@ -14,3 +14,5 @@ ans=a[-1]-a[0]
 for i in range(k-1):
     ans-=diff[i]
 print(ans)
+
+
