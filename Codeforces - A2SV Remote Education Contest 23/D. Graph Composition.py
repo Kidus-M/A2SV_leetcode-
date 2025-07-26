@@ -49,9 +49,9 @@ for _ in range(t):
                 for v in gg[u]:
                     if not visited[v]:
                         visited[v]=True
+                        fseen.add(fc[v])
                         q.append(v)
-                    fseen.add(fc[v])
-            # print(len(fseen))
+
             ans += len(fseen)-1
     print(ans)
 
