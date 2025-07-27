@@ -33,7 +33,7 @@ for _ in range(t):
 
             cid+=1
 
-
+    print(fc)
     visited = [False]*(n+1)
     ans=0
 
@@ -53,7 +53,7 @@ for _ in range(t):
                     fseen.add(fc[v])
             # print(len(fseen))
             ans += len(fseen)-1
-    print(ans)
+    # print(ans)
 
 
 
