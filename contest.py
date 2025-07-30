@@ -1,53 +1,43 @@
-from collections import deque, defaultdict
-t=int(input())
+import sys
+import heapq
+from collections import defaultdict, deque
 
-for _ in range(t):
-    n, m1, m2 = map(int, input().split())
-    gf = [[] for _ in range(n + 1)]
-    gg = [[] for _ in range(n + 1)]
-    fedge=set()
-    for _ in range(m1):
-        u,v=map(int, input().split())
-        gf[u].append(v)
-        gf[v].append(u)
-        fedge.add((min(u,v), max(u,v)))
+input = sys.stdin.readline
 
-    for _ in range(m2):
-        u,v=map(int, input().split())
-        gg[u].append(v)
-        gg[v].append(u)
+T = int(input())
+for _ in range(T):
+    N, M = map(int, input().split())
 
-    component=[0] * (n+1)
-    for i in range(1,n+1):
-        if component[i]==0:
-            q=deque([i])
-            component[i]=i
-            while q:
-                u=q.popleft()
-                for v in gg[u]:
-                    if component[v]==0:
-                        component[v]=i
-                        q.append(v)
+    # Full DAG: u < v
+    graph = defaultdict(list)
+    indegree = [0] * (N + 1)
 
-    ans=0
-    for u in range(1, n+1):
-        for v in range(u+1, n+1):
-            same=(component[u]==component[v])
-            exist=(u,v) in fedge
-            if same and not exist:
-                ans += 1
-            elif not same and exist:
-                ans += 1
+    # Mark removed edges
+    removed = set()
+    for _ in range(M):
+        a, b = map(int, input().split())
+        removed.add((a, b))
 
+    # Rebuild graph excluding removed edges
+    for u in range(1, N + 1):
+        for v in range(u + 1, N + 1):
+            if (u, v) not in removed:
+                graph[u].append(v)
+                indegree[v] += 1
 
-    print(ans)
+    # Use max-heap for lexicographically largest sort
+    heap = []
+    for i in range(1, N + 1):
+        if indegree[i] == 0:
+            heapq.heappush(heap, -i)  # max-heap by negating
 
+    result = []
+    while heap:
+        u = -heapq.heappop(heap)
+        result.append(u)
+        for v in graph[u]:
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                heapq.heappush(heap, -v)
 
-
-
-
-
-
-
-
-
+    print(' '.join(map(str, result)))
