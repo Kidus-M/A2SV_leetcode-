@@ -1,39 +1,38 @@
-import sys
-input=sys.stdin.readline
-n,m=map(int, input().split())
-grid=[list(input().strip()) for _ in range(n)]
+from collections import defaultdict
+import sys, threading,math
+
+input = lambda: sys.stdin.readline().strip()
 
 
-visited=[[False] *m for _ in range(n)]
+def main():
 
 
-dx = [0, 1, 0, -1]
-dy = [1, 0, -1, 0]
+    n=int(input())
+    a=list(map(int, input().split()))
+    count=defaultdict(int)
+    maxx=0
+    for num in a:
+        count[num] += 1
+        maxx=max(maxx,num)
 
-def dfs(x, y, fx, fy,color,depth,n,m):
-    if visited[x][y]:
-        return False
-    visited[x][y]=True
-    for d in range(4):
-        nx, ny=x+dx[d], y+dy[d]
-        if 0<=nx<n and 0<=ny<m and grid[nx][ny]==color:
-            if (nx,ny)==(fx, fy):
-                continue
-            if visited[nx][ny]:
-                if depth>=4:
-                    return True
-            else:
-                if dfs(nx,ny,x,y,color,depth+1,n,m):
-                    return True
-
-
-    return False
+    memo={}
+    def dp(x):
+        if x==0:
+            return 0
+        if x==1:
+            return count[1]
+        if x in memo:
+            return memo[x]
+        memo[x]=max(dp(x-1), dp(x-2)+count[x]*x)
+        return memo[x]
+    print(dp(maxx))
 
 
-for i in range(n):
-    for j in range(m):
-        if not visited[i][j]:
-            if dfs(i,j,-1,-1,grid[i][j],1,n,m):
-                print("Yes")
-                exit()
-print("No")
+
+if __name__ == '__main__':
+    sys.setrecursionlimit(200000)
+    threading.stack_size(2 * 1024 * 1024)
+
+    main_thread = threading.Thread(target=main)
+    main_thread.start()
+    main_thread.join()

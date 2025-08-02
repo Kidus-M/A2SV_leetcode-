@@ -1,43 +1,28 @@
-import sys
-import heapq
-from collections import defaultdict, deque
+import sys, threading
+from collections import Counter
+input = lambda: sys.stdin.readline().strip()
+def main():
+    n=int(input())
+    a=list(map(int, input().split()))
+    count=Counter(a)
 
-input = sys.stdin.readline
+    memo={}
+    def dp(x):
+        if x==0:
+            return 0
+        if x==1:
+            return count[1]
+        if x in memo:
+            return memo[x]
+        memo[x]=max(dp(x-1), dp(x-2)+count[x]*x)
+        return memo[x]
+    print(dp(max(count)))
 
-T = int(input())
-for _ in range(T):
-    N, M = map(int, input().split())
 
-    # Full DAG: u < v
-    graph = defaultdict(list)
-    indegree = [0] * (N + 1)
+if __name__ == '__main__':
+    sys.setrecursionlimit(1 << 30)
+    threading.stack_size(1 << 27)
 
-    # Mark removed edges
-    removed = set()
-    for _ in range(M):
-        a, b = map(int, input().split())
-        removed.add((a, b))
-
-    # Rebuild graph excluding removed edges
-    for u in range(1, N + 1):
-        for v in range(u + 1, N + 1):
-            if (u, v) not in removed:
-                graph[u].append(v)
-                indegree[v] += 1
-
-    # Use max-heap for lexicographically largest sort
-    heap = []
-    for i in range(1, N + 1):
-        if indegree[i] == 0:
-            heapq.heappush(heap, -i)  # max-heap by negating
-
-    result = []
-    while heap:
-        u = -heapq.heappop(heap)
-        result.append(u)
-        for v in graph[u]:
-            indegree[v] -= 1
-            if indegree[v] == 0:
-                heapq.heappush(heap, -v)
-
-    print(' '.join(map(str, result)))
+    main_thread = threading.Thread(target=main)
+    main_thread.start()
+    main_thread.join()
