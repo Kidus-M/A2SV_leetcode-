@@ -2,13 +2,9 @@ t=int(input())
 for _ in range(t):
     n=int(input())
     a=list(map(int, input().split()))
-
-
     c=[0,0,0]
     for i in a:
         c[i%3]+=1
-
-
     target=n // 3
     ans=0
 
