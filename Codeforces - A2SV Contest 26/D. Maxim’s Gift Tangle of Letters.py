@@ -6,22 +6,52 @@ for _ in range(t):
     n=int(input())
     s=input().strip()
 
-    ech=Counter(s[i] for i in range(0,n,2))
-    och = Counter(s[i] for i in range(1, n, 2))
+    if n%2==0:
+        codd=[0]*26
+        ceven=[0]*26
+        for i, ch in enumerate(s, 1):
+            c=ord(ch)-97
+            if i%2:
+                codd[c]+=1
+            else:
+                ceven[c]+=1
+        half=n//2
+        print((half-max(codd))+(half-max(ceven)))
+    else:
+        todd=[0]*26
+        teven=[0]*26
+        for i, ch in enumerate(s, 1):
+            c = ord(ch) - 97
+            if i % 2:
+                todd[c] += 1
+            else:
+                teven[c] += 1
+        podd=[0]*26
+        peven=[0]*26
 
+        sufodd=todd[:]
+        sufeven=teven[:]
 
-    evenC=ech.most_common(2)+[(None,0)]
-    oddC=och.most_common(2)+[(None,0)]
+        l=n-1
+        best=l
 
-    best=float('inf')
+        for i, ch in enumerate(s, 1):
+            c = ord(ch) - 97
+            if i % 2:
+                sufodd[c] -= 1
+            else:
+                sufeven[c] -= 1
 
-    for ec,ev in evenC[:2]:
-        for oc,ov in oddC[:2]:
-            if ec !=oc:
-                changes=(n//2-ev)+(n//2-ov)
-                best=min(best,changes)
-
-    
-
-
-    print(best)
+            modd=0
+            meven=0
+            for a in range(26):
+                v1=podd[a]+sufeven[a]
+                modd=max(v1,modd)
+                v2=peven[a]+sufodd[a]
+                meven=max(meven,v2)
+            best=min(best,l-(modd+meven))
+            if i %2:
+                podd[c]+=1
+            else:
+                peven[c]+=1
+        print(best+1)
