@@ -21,9 +21,7 @@ for _ in range(t):
                 changes=(n//2-ev)+(n//2-ov)
                 best=min(best,changes)
 
-    if best >0:
-        bestd=best-1
-    else:
-        bestd=best
+    
 
-    print(min(best,bestd))
+
+    print(best)

@@ -3,37 +3,35 @@ import sys
 input=sys.stdin.readline
 n,m=map(int,input().split())
 edges=[]
-for _ in range(m):
+indegree=[0]*(n+1)
+idx={}
+g=[[] for _ in range(n+1)]
+for i in range(1,m+1):
     u,v=map(int,input().split())
     edges.append((u,v))
-
-l,h, ans=1,m,-1
-
-indegree=[0]*(n+1)
-g=[[] for _ in range(n+1)]
-
-for k,(u,v) in enumerate(edges,start=1):
     g[u].append(v)
     indegree[v]+=1
-    indg=indegree[:]
-    q = deque([i for i in range(1, n + 1) if indg[i] == 0])
-    count=0
-    unique=True
-
-
-    while q:
-        if len(q)>1:
-            unique=False
-            break
-        u=q.popleft()
-        count +=1
-        for v in g[u]:
-            indegree[v]-=1
-            if indegree[v]==0:
-                q.append(v)
-
-    if unique and count==n:
-        print(k)
+    idx[(u,v)]=i
+q = deque([i for i in range(1, n + 1) if indegree[i] == 0])
+order=[]
+unique=True
+while q:
+    if len(q)>1:
+        unique=False
         break
-else:
+    u=q.popleft()
+    order.append(u)
+    
+    for v in g[u]:
+        indegree[v]-=1
+        if indegree[v]==0:
+            q.append(v)
+
+if len(order)!=n or not unique:
     print(-1)
+else:
+    ans=0
+    for i in range(n-1):
+        u,v=order[i],order[i+1]
+        ans=max(ans,idx[(u,v)])
+    print(ans)
