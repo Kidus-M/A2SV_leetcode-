@@ -18,14 +18,13 @@ for node in range(1, n + 1):
 
 last_edge = 0
 ordered_nodes = 0
-# print(graph)
+
 
 while queue:
     #  This mean we have multiple nodes at this point which leads to more than 1
     #  Topological ordering
     if len(queue) > 1:
         break
-
     u = queue.popleft()
     ordered_nodes += 1
 
