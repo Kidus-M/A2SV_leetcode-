@@ -1,38 +1,41 @@
-from collections import defaultdict
-import sys, threading,math
+from collections import deque
 
-input = lambda: sys.stdin.readline().strip()
+n, m = map(int, input().split())
 
+graph = [[] for _ in range(n + 1)]
+indegree = [0 for _ in range(n + 1)]
 
-def main():
+for edge_num in range(1, m + 1):
+    u, v = map(int, input().split())
+    graph[u].append((v, edge_num))
+    indegree[v] += 1
 
+queue = deque()
 
-    n=int(input())
-    a=list(map(int, input().split()))
-    count=defaultdict(int)
-    maxx=0
-    for num in a:
-        count[num] += 1
-        maxx=max(maxx,num)
+for node in range(1, n + 1):
+    if indegree[node] == 0:
+        queue.append(node)
 
-    memo={}
-    def dp(x):
-        if x==0:
-            return 0
-        if x==1:
-            return count[1]
-        if x in memo:
-            return memo[x]
-        memo[x]=max(dp(x-1), dp(x-2)+count[x]*x)
-        return memo[x]
-    print(dp(maxx))
+last_edge = 0
+ordered_nodes = 0
+# print(graph)
 
+while queue:
+    #  This mean we have multiple nodes at this point which leads to more than 1
+    #  Topological ordering
+    if len(queue) > 1:
+        break
 
+    u = queue.popleft()
+    ordered_nodes += 1
 
-if __name__ == '__main__':
-    sys.setrecursionlimit(200000)
-    threading.stack_size(2 * 1024 * 1024)
+    for v, edge_num in graph[u]:
+        indegree[v] -= 1
+        if indegree[v] == 0:
+            queue.append(v)
+            last_edge = max(last_edge, edge_num)
 
-    main_thread = threading.Thread(target=main)
-    main_thread.start()
-    main_thread.join()
+if ordered_nodes != n:
+    print(-1)
+else:
+    print(last_edge)
