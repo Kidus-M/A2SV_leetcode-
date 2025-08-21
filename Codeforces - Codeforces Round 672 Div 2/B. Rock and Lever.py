@@ -1,4 +1,5 @@
 import sys
+from math import floor, log2
 input = sys.stdin.readline
 t = int(input())
 for _ in range(t):
@@ -6,11 +7,8 @@ for _ in range(t):
     a = list(map(int, input().split()))
     count = [0] * 30
     for x in a:
-        high_bit = 0
-        while x > 0:
-            x >>= 1
-            high_bit += 1
-        count[high_bit - 1] += 1
+        high_bit = floor(log2(x))
+        count[high_bit] += 1
     ans = 0
     for c in count:
         ans += (c * (c - 1)) // 2
