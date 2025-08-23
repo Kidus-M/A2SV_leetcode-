@@ -1,58 +1,18 @@
-from collections import deque
+import bisect
+t=int(input())
+for _ in range(t):
+    n,k,q = map(int, input().split())
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
 
+    a=[0]+a+[n]
+    b=[0]+b+[k]
 
-def check(n, edges, k):
-    graph = [[] for _ in range(n)]
-    indegree = [0 for _ in range(n)]
-    for i in range(k):
-        u, v = edges[i]
-        graph[u].append(v)
-        indegree[v] += 1
+    print(a)
+    print(b)
 
-    queue = deque()
-    dp = [0 for _ in range(n)]
-
-    for node in range(n):
-        if indegree[node] == 0:
-            queue.append(node)
-            dp[node] = 1
-
-    battles = 0
-    while queue:
-        u = queue.popleft()
-        battles += 1
-        for v in graph[u]:
-            if dp[v] < dp[u] + 1:
-                dp[v] = dp[u] + 1
-            indegree[v] -= 1
-            if indegree[v] == 0:
-                queue.append(v)
-
-    if battles < n:
-        return False
-    return max(dp) == n
-
-
-def solve():
-    n, m = list(map(int, input().split()))
-    edges = []
-
-    for _ in range(m):
-        u, v = list(map(int, input().split()))
-        edges.append((u - 1, v - 1))
-
-    #  Binary search on the value of k
-    low = 0
-    high = m
-    ans = -1
-    while low <= high:
-        mid = (low + high) // 2
-        if check(n, edges, mid):
-            ans = mid
-            high = mid - 1
-        else:
-            low = mid + 1
-    return ans
-
-
-print(solve())
+    for _ in range(q):
+        d=int(input())
+        # i=bisect.bisect_right(a,d)
+        # ans=b[i]+ (b[i+1]-b[i]) *d // (a[i+1]-a[i])
+        # print(ans)
