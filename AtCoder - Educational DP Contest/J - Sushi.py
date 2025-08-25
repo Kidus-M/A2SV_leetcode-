@@ -1,24 +1,28 @@
-import sys
-input = sys.stdin.readline
 n = int(input())
-a = list(map(int, input().split()))
-c1 = a.count(1)
-c2 = a.count(2)
-c3 = a.count(3)
-dp = {}
-for k in range(c3 + 1):
-    for j in range(c2 + c3 + 1):
-        for i in range(c1 + c2 + c3 + 1):
-            if i + j + k == 0:
-                dp[(i, j, k)] = 0.0
+a = [0] * 3
+for x in map(int, input().split()):
+    a[x-1] += 1
+
+MX = 305
+dp = [[[0.0] * MX for _ in range(MX)] for _ in range(MX)]
+
+p = 1.0 / n
+for k in range(n + 1):
+    for j in range(n + 1):
+        for i in range(n + 1):
+            z = n - i - j - k
+            if z < 0:
+                break
+            if z == n:
                 continue
-            total = i + j + k
-            res = n / total
-            if i > 0:
-                res += (i / total) * dp.get((i - 1, j, k), 0.0)
-            if j > 0:
-                res += (j / total) * dp.get((i + 1, j - 1, k), 0.0)
-            if k > 0:
-                res += (k / total) * dp.get((i, j + 1, k - 1), 0.0)
-            dp[(i, j, k)] = res
-print(dp[(c1, c2, c3)])
+            x = 1 - z * p
+            if i:
+                dp[i][j][k] += dp[i-1][j][k] * i * p
+            if j:
+                dp[i][j][k] += dp[i+1][j-1][k] * j * p
+            if k:
+                dp[i][j][k] += dp[i][j+1][k-1] * k * p
+            dp[i][j][k] += 1
+            dp[i][j][k] /= x
+
+print(f"{dp[a[0]][a[1]][a[2]]:.10f}")
