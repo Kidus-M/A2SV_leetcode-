@@ -1,17 +1,33 @@
-t=int(input())
+
+t = int(input())
 for _ in range(t):
-    n=int(input())
-    a=list(map(int,input().split()))
-    s=set(a)
-    mex=0
-    while mex in s:
-        mex+=1
-    freq={}
+    n = int(input())
+    a = list(map(int, input().split()))
+
+
+    counts = [0] * (n + 1)
     for x in a:
-        if x<=mex:
-            freq[x]=freq.get(x,0)+1
-    ans=mex
-    for i in range(mex):
-        if freq.get(i,0)>1:
-            ans+=freq[i]-1
-    print(ans)
+        if x <= n:
+            counts[x] += 1
+
+
+    initial_mex = 0
+    while initial_mex < len(counts) and counts[initial_mex] > 0:
+        initial_mex += 1
+
+    if initial_mex == 0:
+        print(0)
+        continue
+
+
+    dp = [0] * (initial_mex + 1)
+    infinity = float('inf')
+
+    for i in range(1, initial_mex + 1):
+        dp[i] = infinity
+        for j in range(i):
+            cost = dp[j] + (counts[j] - 1) * i + j
+            dp[i] = min(dp[i], cost)
+
+    print(dp[initial_mex])
+
