@@ -1,28 +1,22 @@
-import sys, threading
-from collections import Counter
-input = lambda: sys.stdin.readline().strip()
-def main():
-    n=int(input())
-    a=list(map(int, input().split()))
-    count=Counter(a)
+import sys
+input=sys.stdin.readline
+n=int(input())
+a=list(map(int,input().split()))
+q=int(input())
 
-    memo={}
-    def dp(x):
-        if x==0:
-            return 0
-        if x==1:
-            return count[1]
-        if x in memo:
-            return memo[x]
-        memo[x]=max(dp(x-1), dp(x-2)+count[x]*x)
-        return memo[x]
-    print(dp(max(count)))
+curr=a.copy()
 
+events=[]
 
-if __name__ == '__main__':
-    sys.setrecursionlimit(1 << 30)
-    threading.stack_size(1 << 27)
+for _ in range(q):
+    parts=list(map(int,input().split()))
+    if parts[0]==1:
+        _,i,x=parts
+        curr[i-1]=x
+    else:
+        _,p=parts
+        for j in range(n):
+            if curr[j] <p:
+                curr[j]=p
 
-    main_thread = threading.Thread(target=main)
-    main_thread.start()
-    main_thread.join()
+print(*curr)
