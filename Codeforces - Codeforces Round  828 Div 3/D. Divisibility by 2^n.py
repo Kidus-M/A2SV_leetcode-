@@ -1,0 +1,3 @@
+// D.Divisibility
+by
+2 ^ n
