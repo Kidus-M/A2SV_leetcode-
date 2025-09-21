@@ -1,24 +1,21 @@
 import sys
-from collections import Counter
 
 input = sys.stdin.readline
 
 t = int(input())
 for _ in range(t):
     n, k = map(int, input().split())
-    arr = list(map(int, input().split()))
-    freq = Counter(arr)
+    arr = sorted(map(int, input().split()))
+    l, r = 0, n - 1
     score = 0
-    for x in list(freq.keys()):
-        y = k - x
-        if y not in freq:
-            continue
-        if x == y:
-            score += freq[x] // 2
-            freq[x] = 0
+    while l < r:
+        s = arr[l] + arr[r]
+        if s == k:
+            score += 1
+            l += 1
+            r -= 1
+        elif s < k:
+            l += 1
         else:
-            m = min(freq[x], freq[y])
-            score += m
-            freq[x] -= m
-            freq[y] -= m
+            r -= 1
     print(score)
