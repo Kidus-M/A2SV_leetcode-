@@ -10,4 +10,5 @@ def nCr(n, r):
 n = 5
 r = 2
 
+
 print(nCr(n, r))
