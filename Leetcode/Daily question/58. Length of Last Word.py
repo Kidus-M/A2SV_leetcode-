@@ -6,3 +6,4 @@ class Solution:
             word_list = s.split()
 
             return len(word_list[-1])
+
