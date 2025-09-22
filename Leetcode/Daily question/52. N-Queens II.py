@@ -5,6 +5,7 @@ class Solution:
         self.helper(0, n)
         return self.count
 
+
     def helper(self, row, n):
         if row == n:
             self.count += 1
