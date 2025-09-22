@@ -6,6 +6,7 @@ def nCr(n, r):
 
     return nCr(n, r - 1) * (n - r + 1) // r
 
+
 n = 5
 r = 2
 
