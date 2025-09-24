@@ -17,6 +17,7 @@ class Solution:
                 if len(node.words) < 3:
                     node.words.append(product)
 
+
         result = []
         node = root
         for char in searchWord:
