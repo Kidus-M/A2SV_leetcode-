@@ -8,22 +8,21 @@ for _ in range(t):
     p = list(map(int, input().split()))
 
     m=sorted(zip(h,p))
-    heap=[p for _,p in m]
-    heapq.heapify(heap)
-    total=0
-    alive=n
+    pre=[0] * n
+    pre[-1]=m[-1][1]
 
+    for i in range((n-2),-1,-1):
+        pre[i]=min(pre[i+1],m[i][1])
+
+    total=0
     i=0
-    while alive>0 and k >0:
+    while i<n and k >0:
         total += k
         while i<n and m[i][0]<= total:
-            heap.remove(m[i][1])
-            heapq.heapify(heap)
             i+=1
-            alive -=1
-        if alive==0:
+        if i==n:
             break
-        k-=heap[0]
+        k-=pre[i]
 
-    print("YES" if alive ==0 else "NO")
+    print("YES" if i==n else "NO")
 
