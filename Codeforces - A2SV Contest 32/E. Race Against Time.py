@@ -1,6 +1,6 @@
 import heapq
-from collections import defaultdict
 import sys
+
 def compute_bus_dist(graph, n):
     INF = 10**18
     dist = [INF] * (n + 1)
@@ -47,13 +47,14 @@ def check(L, dist_bus_to_n, graph, n, t1, t2, t0):
     return min_arr <= t0
 
 
-input=sys.stdin.readline
+input = sys.stdin.readline
 t = int(input())
 for _ in range(t):
     n, m = map(int, input().split())
     t0, t1, t2 = map(int, input().split())
 
-    graph = defaultdict(list)
+    
+    graph = [[] for _ in range(n + 1)]
     for __ in range(m):
         u, v, l1, l2 = map(int, input().split())
         graph[u].append((v, l1, l2))
