@@ -25,7 +25,6 @@ class Solution:
 
             if arr[val1][val2] == float('inf'):
                 return -1
-
             ans += arr[val1][val2]
 
         return ans
