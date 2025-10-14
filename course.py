@@ -10,6 +10,8 @@ def find_first_not_less(arr, target):
             left = mid + 1
     return result
 
+
+
 def find_first_greater(arr, target):
     left, right = 0, len(arr) - 1
     result = len(arr)
