@@ -13,6 +13,7 @@ def dfs_first(graph, node, visited, finish):
     finish.append(node)
 
 
+
 def dfs_second(graph, node, visited, component):
     visited[node] = True
     component.append(node)
