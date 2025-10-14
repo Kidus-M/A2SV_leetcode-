@@ -31,3 +31,5 @@ for _ in range(k):
     left_idx = find_first_not_less(arr, l)
     right_idx = find_first_greater(arr, r)
     print(right_idx - left_idx)
+
+
