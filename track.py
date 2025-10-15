@@ -1,8 +1,12 @@
 import sys
 
 
+
+
 def is_in_square(x1, y1, half_d1, x2, y2):
     return abs(x2 - x1) <= half_d1 and abs(y2 - y1) <= half_d1
+
+
 
 
 def dfs_first(graph, node, visited, finish):
@@ -11,6 +15,7 @@ def dfs_first(graph, node, visited, finish):
         if not visited[neighbor]:
             dfs_first(graph, neighbor, visited, finish)
     finish.append(node)
+
 
 
 def dfs_second(graph, node, visited, component):

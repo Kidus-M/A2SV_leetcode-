@@ -16,3 +16,4 @@ for _ in range(t):
         # i=bisect.bisect_right(a,d)
         # ans=b[i]+ (b[i+1]-b[i]) *d // (a[i+1]-a[i])
         # print(ans)
+
