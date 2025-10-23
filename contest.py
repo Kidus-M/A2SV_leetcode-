@@ -17,6 +17,8 @@ for _ in range(q):
         _,p=parts
         for j in range(n):
             if curr[j] <p:
+
+
                 curr[j]=p
 
 print(*curr)
