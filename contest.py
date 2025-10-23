@@ -20,3 +20,4 @@ for _ in range(q):
                 curr[j]=p
 
 print(*curr)
+
