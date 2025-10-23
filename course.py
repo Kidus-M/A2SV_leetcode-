@@ -12,6 +12,8 @@ def find_first_not_less(arr, target):
 
 
 
+
+
 def find_first_greater(arr, target):
     left, right = 0, len(arr) - 1
     result = len(arr)
