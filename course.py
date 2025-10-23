@@ -26,6 +26,8 @@ def find_first_greater(arr, target):
             left = mid + 1
     return result
 
+
+
 n = int(input())
 arr = list(map(int, input().split()))
 arr.sort()
