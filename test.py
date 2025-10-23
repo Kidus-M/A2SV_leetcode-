@@ -13,6 +13,8 @@ for _ in range(t):
 
 
 
+
+
     for _ in range(q):
         d=int(input())
         # i=bisect.bisect_right(a,d)
