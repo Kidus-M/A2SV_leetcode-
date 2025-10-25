@@ -12,6 +12,7 @@ class Solution:
         for k, v in mp.items():
             heapq.heappush(pq, k)
 
+
         while pq:
             minn = pq[0]
             count = 0
