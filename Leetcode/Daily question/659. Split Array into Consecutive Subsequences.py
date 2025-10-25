@@ -26,6 +26,7 @@ class Solution:
                     if minn != pq[0]:
                         return False
                     heapq.heappop(pq)
+
                 if minn + 1 in mp and (mp[minn] >= mp[minn + 1]):
                     if count < 3:
                         return False
