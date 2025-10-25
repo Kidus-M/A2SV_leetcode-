@@ -30,5 +30,6 @@ class Solution:
                     if count < 3:
                         return False
                     break
+
                 minn += 1
         return True
