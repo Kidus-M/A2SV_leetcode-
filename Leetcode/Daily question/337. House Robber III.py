@@ -5,6 +5,7 @@
 #         self.left = left
 #         self.right = right
 
+
 class Solution:
     def rob(self, root: Optional[TreeNode]) -> int:
         def dfs(curr):
