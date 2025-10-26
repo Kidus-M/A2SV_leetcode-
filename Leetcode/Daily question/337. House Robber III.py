@@ -12,7 +12,6 @@ class Solution:
                 return 0, 0
             left = dfs(curr.left)
             right = dfs(curr.right)
-
             rob = curr.val + left[1] + right[1]
             skip = max(left[0], left[1]) + max(right[0], right[1])
             return rob, skip
