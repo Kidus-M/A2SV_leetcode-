@@ -10,7 +10,6 @@ class Solution:
         def dfs(curr):
             if curr is None:
                 return 0, 0
-
             left = dfs(curr.left)
             right = dfs(curr.right)
 
