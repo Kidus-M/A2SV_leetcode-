@@ -15,6 +15,5 @@ class Solution:
 
             rob = curr.val + left[1] + right[1]
             skip = max(left[0], left[1]) + max(right[0], right[1])
-
             return rob, skip
         return max(dfs(root))
