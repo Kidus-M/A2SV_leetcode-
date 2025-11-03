@@ -10,7 +10,6 @@ class Solution:
             if len(neighbors) == 1:
                 res = [node, neighbors[0]]
                 break
-
         while len(res) < len(pairs) + 1:
             last, prev = res[-1], res[-2]
             candidates = graph[last]
