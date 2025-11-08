@@ -22,3 +22,4 @@ class Solution:
                 temp.append(j[1])
             result.append(temp)
         return result
+
