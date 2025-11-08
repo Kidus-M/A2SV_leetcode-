@@ -16,27 +16,26 @@ for _ in range(m):
     graph[v].append(u)
 
 
-dist=[]
+dist=[[10**9]*k for _ in range(n)]
 
-for g in range(1,k+1):
+for g in range(k):
     q=deque()
-    d=[-1]*n
+
     for i in range(n):
-        if goods[i]==g:
-            d[i]=0
+        if goods[i]==g+1:
+            dist[i][g]=0
             q.append(i)
     while q:
         u=q.popleft()
-
         for v in graph[u]:
-            if d[v]==-1:
-                d[v]=d[u]+1
+            if dist[v][g]>dist[u][g]+1:
+                dist[v][g]=dist[u][g]+1
                 q.append(v)
-    dist.append(d)
+
 
 ans=[]
 for i in range(n):
-    dd=[dist[g][i] for g in range(k)]
-    dd.sort()
-    ans.append(str(sum(dd[:s])))
+    dist[i].sort()
+    total=sum(dist[i][:s])
+    ans.append(str(total))
 print(" ".join(ans))
