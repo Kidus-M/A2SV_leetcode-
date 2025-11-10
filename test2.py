@@ -33,3 +33,4 @@ for _ in range(int(input())):
         else:
             l = mid + 1
     print(ans)
+
