@@ -5,7 +5,7 @@ for _ in range(int(input())):
     hs = list(map(int, input().split()))
     xs = list(map(int, input().split()))
 
-    def check(T):
+    def check(T): # making a check function to check the operations per change
         coverage = defaultdict(int)
         for x, h in zip(xs, hs):
             r = (h + T - 1) // T
