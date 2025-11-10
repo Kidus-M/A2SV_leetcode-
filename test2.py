@@ -34,5 +34,5 @@ for _ in range(int(input())):
             l = mid + 1
     print(ans)
 
-
+#adding points
 
