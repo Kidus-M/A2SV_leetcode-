@@ -1,0 +1,96 @@
+1. Problem Understanding
+
+The task was to design a system that finds the optimal path between two locations in a city map. The map is represented as a weighted graph where nodes are locations and edges represent travel cost. The system must support Uniform Cost Search (UCS) and A* and allow users to:
+
+Build their own graph
+
+Enter start and goal locations
+
+Receive the optimal path and cost
+
+Avoid repeated state expansions using a closed list
+
+2. Algorithm Descriptions
+Uniform Cost Search (UCS)
+
+UCS expands the cheapest unexplored path first. It guarantees finding the optimal solution when all edge costs are positive. It does not use heuristics, making it slower on large maps.
+
+A* Search
+
+A* evaluates each state using:
+f(n) = g(n) + h(n)
+where g(n) is actual cost so far, and h(n) is the heuristic. A good heuristic (such as shortest straight-line distance or table-based distances) makes the search faster than UCS while still guaranteeing optimality.
+
+Advantages & Limitations
+Algorithm	Strengths	Limitations
+UCS	Optimal, simple	Slow without heuristics
+A*	Optimal + faster with good heuristic	Requires heuristic design
+3. Implementation Overview
+
+The program is written in Python and uses:
+
+heapq — priority queue for UCS and A*
+
+Dictionaries — graph adjacency list
+
+User input — dynamic graph creation, heuristics, algorithm selection
+
+Modular functions include:
+
+get_graph_from_user()
+
+get_heuristics_from_user()
+
+uniform_cost_search()
+
+a_star()
+
+Both algorithms use a closed list to avoid revisiting nodes.
+
+Example snippet (UCS priority queue):
+
+pq = [(0, start, [])]
+cost, node, path = heapq.heappop(pq)
+
+4. Experimental Results (Example)
+Algorithm	Path	Cost	Nodes Explored
+UCS	Aratkilo → Kazanchis → Hayahulet → Bole	510	6
+A*	Aratkilo → Kazanchis → Hayahulet → Bole	510	4
+
+A* explored fewer nodes because the heuristic guided the search.
+
+5. Analysis & Comparison
+
+UCS found the correct path but explored more nodes.
+
+A* performed faster due to heuristic values based on the Addis Ababa distance table.
+
+For well-structured heuristics, A* is noticeably more efficient.
+
+6. Reflection on Learning & Tools Used (AI Usage)
+
+During development, we used AI tools such as ChatGPT in limited but helpful ways:
+
+How AI Was Used
+
+Debugging: Helped identify logical mistakes in queue handling and closed list implementation.
+
+Modularity: Suggested restructuring the program into reusable functions (graph input, heuristics input, UCS, A*).
+
+Input Structuring: AI helped design simple, user-friendly input formats for graph edges and heuristics.
+
+Commenting: Assisted in adding consistent and clear comments across the file.
+
+Algorithm clarity: Provided explanations comparing UCS, A*, and Dijkstra to strengthen understanding.
+
+What We Did Ourselves
+
+Implemented the algorithms, tested all cases, and designed the final input/output structure.
+
+Modified AI suggestions to fit our assignment requirements.
+
+Ensured all logic and implementation choices aligned with course material.
+
+7. Conclusion
+
+This project helped us understand graph search algorithms, heuristic design, and modular programming. UCS gave guaranteed correctness, while A* offered significantly better performance with good heuristics. Using structured input and modular functions improved usability and readability. AI tools supported debugging and documentation, but core implementation and testing were done manually.
