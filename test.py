@@ -1,23 +1,45 @@
-import bisect
+from collections import deque
+import math
+import sys
+
+input=sys.stdin.readline
+
+
 t=int(input())
+
 for _ in range(t):
-    n,k,q = map(int, input().split())
-    a = list(map(int, input().split()))
-    b = list(map(int, input().split()))
-
-    a=[0]+a+[n]
-    b=[0]+b+[k]
-
-    print(a)
-    print(b)
+    n=int(input())
+    a=list(map(int,input().split()))
 
 
+    playlist=list(range(n))
+    removed=[]
+
+    pos=0
+    prevgenre=None
+
+    while playlist:
+        curridx=playlist[pos]
+        currgenre=a[curridx]
 
 
+        if prevgenre is not None and math.gcd(prevgenre,currgenre)==1:
+            removed.append(curridx+1)
+            playlist.pop(pos)
 
-    for _ in range(q):
-        d=int(input())
-        # i=bisect.bisect_right(a,d)
-        # ans=b[i]+ (b[i+1]-b[i]) *d // (a[i+1]-a[i])
-        # print(ans)
+            if not playlist:
+                break
+            if pos>=len(playlist):
+                pos=0
+            prevgenre=None
+        else:
+            prevgenre=currgenre
+            pos=pos+1%len(playlist)
+            if pos==0 and prevgenre==a[playlist[-1]]:
+                if math.gcd(a[playlist[-1]], a[playlist[0]])==1:
+                    continue
+                else:
+                    break
+    print(len(removed), *removed)
+
 
