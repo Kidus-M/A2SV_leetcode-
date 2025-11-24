@@ -1,45 +1,23 @@
-from collections import deque
-import math
-import sys
+s="aabbbbc"
+stack = []
 
-input=sys.stdin.readline
+for char in s:
 
+    if not stack or stack[-1][0] != char:
+        if stack and stack[-1][1] >= 3:
+            stack.pop()
+            if stack and stack[-1][0] == char:
+                stack[-1][1] += 1
+                continue
+        stack.append([char, 1])
+    else:
+        stack[-1][1] += 1
 
-t=int(input())
+if stack and stack[-1][1] >= 3:
+    stack.pop()
 
-for _ in range(t):
-    n=int(input())
-    a=list(map(int,input().split()))
+result = []
+for char, count in stack:
+    result.append(char * count)
 
-
-    playlist=list(range(n))
-    removed=[]
-
-    pos=0
-    prevgenre=None
-
-    while playlist:
-        curridx=playlist[pos]
-        currgenre=a[curridx]
-
-
-        if prevgenre is not None and math.gcd(prevgenre,currgenre)==1:
-            removed.append(curridx+1)
-            playlist.pop(pos)
-
-            if not playlist:
-                break
-            if pos>=len(playlist):
-                pos=0
-            prevgenre=None
-        else:
-            prevgenre=currgenre
-            pos=pos+1%len(playlist)
-            if pos==0 and prevgenre==a[playlist[-1]]:
-                if math.gcd(a[playlist[-1]], a[playlist[0]])==1:
-                    continue
-                else:
-                    break
-    print(len(removed), *removed)
-
-
+print(''.join(result))
