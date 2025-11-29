@@ -9,3 +9,4 @@ class Solution:
             x //= 10
 
         return 0 if ans < -2**31 or ans > 2**31 - 1 else sign * ans
+
