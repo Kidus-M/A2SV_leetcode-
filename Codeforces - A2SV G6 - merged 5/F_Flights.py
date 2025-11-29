@@ -10,7 +10,7 @@ for i in range(m):
     graph[u].append(v)
     revadj[v].append(u)
 
-canreach=[False]*(n+1)
+can_reach=[False]*(n+1)
 
 
 indegree=[0]*(n+1)
