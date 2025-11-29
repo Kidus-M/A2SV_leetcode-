@@ -1,4 +1,9 @@
 from collections import deque
+import sys
+
+
+input=sys.stdin.readline
+
 n,m=map(int,input().split())
 edges=[]
 graph=[[] for _ in range(n+1)]
