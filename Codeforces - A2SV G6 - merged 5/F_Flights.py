@@ -15,6 +15,7 @@ for i in range(m):
     graph[u].append(v)
     revadj[v].append(u)
 
+
 can_reach=[False]*(n+1)
 
 
