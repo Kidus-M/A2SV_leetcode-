@@ -34,9 +34,6 @@ for _ in range(t):
         side=end-start+1
 
 
-
-
-
         ans.append(side+side)
 
     print(*ans)
