@@ -15,3 +15,4 @@ while need >0:
     city += 1
     need -= 1
 print(cost)
+
