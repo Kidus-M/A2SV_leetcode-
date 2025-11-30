@@ -17,4 +17,5 @@ def counting(n):
     return ans
 
 
+
 print(counting(r)-counting(l-1))
