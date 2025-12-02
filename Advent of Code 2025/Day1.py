@@ -6,8 +6,6 @@ while True:
         line = input().strip()
     except EOFError:
         break
-
-    # Stop when user enters an empty line at the end
     if line == "":
         break
 
