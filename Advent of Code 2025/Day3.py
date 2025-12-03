@@ -1,21 +1,19 @@
-print("Alright, drop the battery banks:")
+print("Yo, paste your battery banks. Hit ENTER on an empty line when you're done.")
+
 lines = []
 while True:
-    try:
-        t = input().strip()
-        if t:
-            lines.append(t)
-    except EOFError:
+    t = input()
+    if t.strip() == "":
         break
+    lines.append(t.strip())
 
-print("Cooking...")
+print("Alright, processing...")
 
 total = 0
 for bank in lines:
-    digits = list(bank)
-    first = max(digits)
-    i = digits.index(first)
-    second = max(digits[i+1:])
+    first = max(bank)
+    i = bank.index(first)
+    second = max(bank[i+1:])
     total += int(first + second)
 
-print(total)
+print("Total joltage:", total)
