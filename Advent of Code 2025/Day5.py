@@ -1,27 +1,34 @@
-print("Paste fresh ranges, then blank line, then ingredient IDs:")
+print("Enter the ingredient ID ranges, then a blank line, then the IDs to check.")
+print("Waiting for input...")
 
-import sys
-
-section = 0
 ranges = []
-ids = []
-
-for line in sys.stdin:
-    line = line.strip()
+while True:
+    line = input().strip()
     if line == "":
-        section = 1
-        continue
-    if section == 0:
-        a, b = map(int, line.split("-"))
-        ranges.append((a, b))
-    else:
-        ids.append(int(line))
-print("running")
-fresh = 0
-for x in ids:
-    for a, b in ranges:
-        if a <= x <= b:
-            fresh += 1
-            break
+        break
+    a, b = map(int, line.split("-"))
+    ranges.append((a, b))
 
-print(fresh)
+print("Ranges loaded:", ranges)
+print("Now enter ingredient IDs to test (end with CTRL+D / CTRL+Z):")
+
+fresh_count = 0
+
+while True:
+    try:
+        x = int(input().strip())
+        print("Checking:", x)
+        is_fresh = False
+        for a, b in ranges:
+            if a <= x <= b:
+                is_fresh = True
+                break
+        if is_fresh:
+            print(x, "is FRESH")
+            fresh_count += 1
+        else:
+            print(x, "is SPOILED")
+    except EOFError:
+        break
+
+print("Total fresh ingredients:", fresh_count)
