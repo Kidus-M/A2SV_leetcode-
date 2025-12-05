@@ -1,26 +1,46 @@
-print("Processing...")
+print("Reading input...")
+data = input()
+lines = []
+while data.strip():
+    lines.append(data)
+    data = input()
+print("Fresh ranges read:", len(lines))
 
-ranges = []
-while True:
-    line = input().strip()
-    if line == "":
-        break
-    a, b = map(int, line.split("-"))
-    ranges.append((a, b))
+fresh_ranges = []
+for line in lines:
+    start, end = map(int, line.split('-'))
+    fresh_ranges.append((start, end))
+    print(f"Range: {start}-{end}")
 
-fresh = 0
-ids = []
+print("\nReading blank line...")
+blank = input()
+print("Blank line passed")
 
+print("\nReading available IDs...")
+available = []
 while True:
     try:
-        ids.append(int(input().strip()))
+        data = input()
+        if data.strip():
+            id_val = int(data)
+            available.append(id_val)
+            print("Available ID:", id_val)
     except EOFError:
         break
 
-for x in ids:
-    for a, b in ranges:
-        if a <= x <= b:
-            fresh += 1
-            break
+print("\nProcessing...")
 
-print(fresh)
+fresh_count = 0
+for ingredient in available:
+    is_fresh = False
+    for start, end in fresh_ranges:
+        if start <= ingredient <= end:
+            is_fresh = True
+            break
+    if is_fresh:
+        print(ingredient, "is fresh")
+        fresh_count += 1
+    else:
+        print(ingredient, "is spoiled")
+
+print("\nTotal fresh ingredients:", fresh_count)
