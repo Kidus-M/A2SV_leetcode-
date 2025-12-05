@@ -1,46 +1,49 @@
-print("Reading input...")
-data = input()
-lines = []
-while data.strip():
-    lines.append(data)
-    data = input()
-print("Fresh ranges read:", len(lines))
+import sys
+import bisect
 
-fresh_ranges = []
-for line in lines:
-    start, end = map(int, line.split('-'))
-    fresh_ranges.append((start, end))
-    print(f"Range: {start}-{end}")
-
-print("\nReading blank line...")
-blank = input()
-print("Blank line passed")
-
-print("\nReading available IDs...")
-available = []
-while True:
+def main():
     try:
-        data = input()
-        if data.strip():
-            id_val = int(data)
-            available.append(id_val)
-            print("Available ID:", id_val)
-    except EOFError:
-        break
+        with open('input.txt', 'r') as f:
+            content = f.read()
+    except FileNotFoundError:
+        return
 
-print("\nProcessing...")
+    parts = content.strip().split('\n\n')
+    if len(parts) < 2:
+        return
 
-fresh_count = 0
-for ingredient in available:
-    is_fresh = False
-    for start, end in fresh_ranges:
-        if start <= ingredient <= end:
-            is_fresh = True
-            break
-    if is_fresh:
-        print(ingredient, "is fresh")
-        fresh_count += 1
-    else:
-        print(ingredient, "is spoiled")
+    range_lines = parts[0].splitlines()
+    id_lines = parts[1].splitlines()
 
-print("\nTotal fresh ingredients:", fresh_count)
+    ranges = []
+    for line in range_lines:
+        start, end = map(int, line.split('-'))
+        ranges.append((start, end))
+
+    ranges.sort()
+
+    merged = []
+    if ranges:
+        curr_start, curr_end = ranges[0]
+        for next_start, next_end in ranges[1:]:
+            if next_start <= curr_end + 1:
+                curr_end = max(curr_end, next_end)
+            else:
+                merged.append((curr_start, curr_end))
+                curr_start, curr_end = next_start, next_end
+        merged.append((curr_start, curr_end))
+
+    starts = [r[0] for r in merged]
+    count = 0
+
+    for line in id_lines:
+        val = int(line)
+        idx = bisect.bisect_right(starts, val) - 1
+        if idx >= 0:
+            if val <= merged[idx][1]:
+                count += 1
+
+    print(count)
+
+if __name__ == '__main__':
+    main()
