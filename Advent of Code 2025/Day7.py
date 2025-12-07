@@ -42,3 +42,5 @@ def main():
             break
 
     print(splits)
+
+main()
