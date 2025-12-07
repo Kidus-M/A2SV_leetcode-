@@ -52,5 +52,5 @@ def main():
     print(total_timelines)
 
 
-if __name__ == '__main__':
-    main()
+
+main()
