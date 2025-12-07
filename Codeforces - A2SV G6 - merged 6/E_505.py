@@ -86,3 +86,4 @@ def solve():
 
         print(min(dp))
 solve()
+
