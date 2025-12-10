@@ -13,8 +13,6 @@ def solve_machine(line):
     target = [int(x) for x in target_str.split(',')]
     n_counters = len(target)
 
-    # Parse buttons (0,2,3)
-    # These are the columns of our matrix
     button_strs = re.findall(r'\(([\d,]+)\)', line)
     buttons = []
     for b_str in button_strs:
@@ -28,11 +26,6 @@ def solve_machine(line):
     n_vars = len(buttons)
     if n_vars == 0:
         return 0 if sum(target) == 0 else float('inf')
-
-    # We need to solve Ax = b s.t. x >= 0, x is integer, minimize sum(x)
-    # Matrix A: rows are counters, cols are buttons
-
-    # Build augmented matrix [A | b] using Fractions to avoid precision issues
     matrix = []
     for r in range(n_counters):
         row = [Fraction(buttons[c][r]) for c in range(n_vars)] + [Fraction(target[r])]
