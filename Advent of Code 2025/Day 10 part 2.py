@@ -101,10 +101,6 @@ def solve_machine(line):
                 # If a button doesn't affect anything, optimal presses is 0 (bound=0)
         bounds.append(upper if has_effect else 0)
 
-    # Identify pivot variables and their relations to free variables
-    # For pivot variable x_p at row i:
-    # x_p + sum(matrix[i][f] * x_f) = matrix[i][constant]
-    # x_p = matrix[i][constant] - sum(matrix[i][f] * x_f)
 
     min_total = float('inf')
 
@@ -157,7 +153,6 @@ def main():
         result = solve_machine(line)
 
         if result == float('inf'):
-            # Cannot configure this machine
             pass
         else:
             total_presses += result
