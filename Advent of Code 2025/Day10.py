@@ -90,15 +90,10 @@ def solve_machine(line):
     for i in range(len(pivot_cols)):
         c = pivot_cols[i]
         xp[c] = matrix[i][n_vars]
-
-    # Construct Basis for Null Space
-    # For each free variable f, create a basis vector where x_f=1 and others=0
     basis = []
     for f in free_vars:
         vec = [0] * n_vars
         vec[f] = 1
-        # Determine pivot variables for this basis vector
-        # x_c + M[i][f]*1 = 0  => x_c = M[i][f] (in GF(2))
         for i in range(len(pivot_cols)):
             c = pivot_cols[i]
             vec[c] = matrix[i][f]
