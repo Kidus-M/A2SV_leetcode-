@@ -82,11 +82,6 @@ def solve_machine(line):
         if matrix[r][n_vars] != 0:
             return float('inf')
 
-    # If there are free variables, we need to iterate over their possible values.
-    # Because all coefficients in the original problem are non-negative (0 or 1),
-    # and targets are positive, the button presses are bounded.
-    # Specifically, x_j <= target_i for any i where button j increments counter i.
-
     bounds = []
     for j in range(n_vars):
         upper = float('inf')
@@ -95,10 +90,7 @@ def solve_machine(line):
         for r in range(n_counters):
             if col_vec[r] > 0:
                 has_effect = True
-                # Max presses is limited by the smallest relevant target value
                 upper = min(upper, target[r])
-
-                # If a button doesn't affect anything, optimal presses is 0 (bound=0)
         bounds.append(upper if has_effect else 0)
 
 
