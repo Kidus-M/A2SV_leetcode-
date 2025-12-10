@@ -5,7 +5,6 @@ from fractions import Fraction
 
 
 def solve_machine(line):
-    # Parse joltage requirements {3,5,4,7}
     match = re.search(r'\{([\d,]+)\}', line)
     if not match:
         return 0
