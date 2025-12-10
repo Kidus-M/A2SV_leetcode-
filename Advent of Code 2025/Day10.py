@@ -103,8 +103,6 @@ def solve_machine(line):
             c = pivot_cols[i]
             vec[c] = matrix[i][f]
         basis.append(vec)
-
-    # Brute force search over free variables to find minimum Hamming weight
     min_presses = float('inf')
     for coeffs in itertools.product([0, 1], repeat=len(free_vars)):
         current_solution = list(xp)
