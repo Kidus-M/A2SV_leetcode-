@@ -4,12 +4,12 @@ import itertools
 
 
 def solve_machine(line):
-    # Parse target lights
+
     match = re.search(r'\[([.#]+)\]', line)
     if not match:
         return 0
     target_str = match.group(1)
-    # Convert . to 0 and # to 1
+
     target = [1 if c == '#' else 0 for c in target_str]
     n_lights = len(target)
 
