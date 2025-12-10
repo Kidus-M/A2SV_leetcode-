@@ -42,13 +42,11 @@ def solve_machine(line):
     pivot_cols = []
     free_vars = []
 
-    # Gaussian Elimination to RREF (Row Reduced Echelon Form)
     for col in range(n_vars):
         if pivot_row >= n_counters:
             free_vars.append(col)
             continue
 
-        # Find pivot
         pivot = -1
         for r in range(pivot_row, n_counters):
             if matrix[r][col] != 0:
@@ -59,16 +57,12 @@ def solve_machine(line):
             free_vars.append(col)
             continue
 
-        # Swap rows
         matrix[pivot_row], matrix[pivot] = matrix[pivot], matrix[pivot_row]
         pivot_cols.append(col)
-
-        # Normalize pivot row
         divisor = matrix[pivot_row][col]
         for c in range(col, n_vars + 1):
             matrix[pivot_row][c] /= divisor
 
-        # Eliminate other rows
         for r in range(n_counters):
             if r != pivot_row and matrix[r][col] != 0:
                 factor = matrix[r][col]
@@ -76,8 +70,6 @@ def solve_machine(line):
                     matrix[r][c] -= factor * matrix[pivot_row][c]
 
         pivot_row += 1
-
-    # Check for consistency (0 = non-zero)
     for r in range(pivot_row, n_counters):
         if matrix[r][n_vars] != 0:
             return float('inf')
