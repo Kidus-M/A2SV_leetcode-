@@ -13,8 +13,6 @@ def solve_machine(line):
     target = [1 if c == '#' else 0 for c in target_str]
     n_lights = len(target)
 
-    # Parse buttons
-    # Format (0,2,3)
     button_strs = re.findall(r'\(([\d,]+)\)', line)
     buttons = []
     for b_str in button_strs:
@@ -28,14 +26,6 @@ def solve_machine(line):
     n_vars = len(buttons)
     if n_vars == 0:
         return 0 if sum(target) == 0 else float('inf')
-
-    # We need to solve Ax = b over GF(2)
-    # A is matrix where columns are buttons, rows are lights
-    # x is vector of button presses (0 or 1)
-    # b is target vector
-
-    # Build augmented matrix [A | b]
-    # Dimensions: n_lights x (n_vars + 1)
     matrix = []
     for r in range(n_lights):
         row = [buttons[c][r] for c in range(n_vars)] + [target[r]]
@@ -45,13 +35,13 @@ def solve_machine(line):
     pivot_cols = []
     free_vars = []
 
-    # Gaussian Elimination (RREF)
+
     for col in range(n_vars):
         if pivot_row >= n_lights:
             free_vars.append(col)
             continue
 
-        # Find pivot in current column
+
         pivot = -1
         for r in range(pivot_row, n_lights):
             if matrix[r][col] == 1:
