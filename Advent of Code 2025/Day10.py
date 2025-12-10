@@ -74,14 +74,9 @@ def solve_machine(line):
 
         pivot_row += 1
 
-    # Check for inconsistency
-    # If a row is [0 0 ... 0 | 1], system is unsolvable
     for r in range(pivot_row, n_lights):
         if matrix[r][n_vars] == 1:
             return float('inf')
-
-    # Construct Particular Solution (xp)
-    # Set all free variables to 0
     xp = [0] * n_vars
     for i in range(len(pivot_cols)):
         c = pivot_cols[i]
