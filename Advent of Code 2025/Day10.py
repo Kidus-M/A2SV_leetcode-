@@ -140,8 +140,6 @@ def main():
         result = solve_machine(line)
 
         if result == float('inf'):
-            # If a machine is unsolvable, technically the total is undefined/impossible
-            # But usually in these puzzles we skip or assumes valid input
             pass
         else:
             total_presses += result
