@@ -103,27 +103,16 @@ def solve_machine(line):
 
 
     min_total = float('inf')
-
-    # Prepare ranges for free variables based on calculated bounds
     ranges = [range(bounds[f] + 1) for f in free_vars]
-
-    # Iterate through all combinations of free variables
-    # If no free variables, this loop runs once with empty tuple
     for free_vals in itertools.product(*ranges):
         valid = True
         current_x = [0] * n_vars
-
-        # Set free variable values
         for i, f_col in enumerate(free_vars):
             current_x[f_col] = free_vals[i]
-
-        # Calculate pivot variables
         for i, p_col in enumerate(pivot_cols):
-            val = matrix[i][n_vars]  # Start with constant
+            val = matrix[i][n_vars]
             for idx, f_col in enumerate(free_vars):
                 val -= matrix[i][f_col] * free_vals[idx]
-
-            # Check if integer and non-negative
             if val.denominator != 1 or val < 0:
                 valid = False
                 break
