@@ -83,10 +83,6 @@ def solve_machine(line):
     # Construct Particular Solution (xp)
     # Set all free variables to 0
     xp = [0] * n_vars
-    # Determine pivot variables
-    # Since matrix is in RREF, for pivot row i, pivot col c:
-    # 1*x_c + sum(M[i][f]*x_f) = M[i][target]
-    # If free vars are 0, x_c = M[i][target]
     for i in range(len(pivot_cols)):
         c = pivot_cols[i]
         xp[c] = matrix[i][n_vars]
