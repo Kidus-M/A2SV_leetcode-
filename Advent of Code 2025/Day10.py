@@ -106,8 +106,6 @@ def solve_machine(line):
 
     # Brute force search over free variables to find minimum Hamming weight
     min_presses = float('inf')
-
-    # Iterate through all 2^k combinations of the null space basis vectors
     for coeffs in itertools.product([0, 1], repeat=len(free_vars)):
         current_solution = list(xp)
         for i, coeff in enumerate(coeffs):
