@@ -110,8 +110,6 @@ def solve_machine(line):
     # Iterate through all 2^k combinations of the null space basis vectors
     for coeffs in itertools.product([0, 1], repeat=len(free_vars)):
         current_solution = list(xp)
-
-        # Add basis vectors corresponding to coeffs
         for i, coeff in enumerate(coeffs):
             if coeff:
                 for j in range(n_vars):
