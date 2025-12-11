@@ -51,13 +51,11 @@ def main():
 
     # Path set 1: svr -> dac -> fft -> out
     p1 = get_count('svr', 'dac') * get_count('dac', 'fft') * get_count('fft', 'out')
-
-    # Path set 2: svr -> fft -> dac -> out
     p2 = get_count('svr', 'fft') * get_count('fft', 'dac') * get_count('dac', 'out')
 
     print(p1 + p2)
 
 
 if __name__ == '__main__':
-    sys.setrecursionlimit(20000)  # Increase recursion limit just in case
+    sys.setrecursionlimit(20000)
     main()
