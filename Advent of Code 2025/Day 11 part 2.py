@@ -44,12 +44,6 @@ def main():
     def get_count(start, end):
         return count_paths(start, end, graph, {})
 
-    # We need paths from 'svr' to 'out' visiting BOTH 'dac' and 'fft'.
-    # Since flow is one-way (DAG), the order is either:
-    # 1. svr -> ... -> dac -> ... -> fft -> ... -> out
-    # 2. svr -> ... -> fft -> ... -> dac -> ... -> out
-
-    # Path set 1: svr -> dac -> fft -> out
     p1 = get_count('svr', 'dac') * get_count('dac', 'fft') * get_count('fft', 'out')
     p2 = get_count('svr', 'fft') * get_count('fft', 'dac') * get_count('dac', 'out')
 
