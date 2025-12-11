@@ -44,8 +44,6 @@ def main():
     if 'you' not in graph:
         print(0)
         return
-
-    # Using memoization to handle potentially large number of overlapping paths (DAG)
     memo = {}
     result = count_paths('you', graph, memo)
 
@@ -53,5 +51,5 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.setrecursionlimit(20000)  # Increase recursion limit just in case
+    sys.setrecursionlimit(20000)
     main()
