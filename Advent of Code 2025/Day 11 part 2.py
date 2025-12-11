@@ -33,14 +33,11 @@ def main():
         if not line:
             continue
 
-        # Parse line: "bbb: ddd eee"
         if ':' in line:
             src, dests_str = line.split(':', 1)
             src = src.strip()
             dests = [d.strip() for d in dests_str.split()]
             graph[src] = dests
-
-    # Helper to calculate paths between two nodes with a fresh memo
     def get_count(start, end):
         return count_paths(start, end, graph, {})
 
