@@ -1,0 +1,57 @@
+import sys
+
+
+def count_paths(node, graph, memo):
+    if node == 'out':
+        return 1
+    if node in memo:
+        return memo[node]
+
+    # If a node has no outgoing connections (dead end) and isn't 'out'
+    if node not in graph:
+        return 0
+
+    total_paths = 0
+    for neighbor in graph[node]:
+        total_paths += count_paths(neighbor, graph, memo)
+
+    memo[node] = total_paths
+    return total_paths
+
+
+def main():
+    try:
+        with open('input.txt', 'r') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        return
+
+    graph = {}
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+
+        # Parse line: "bbb: ddd eee"
+        if ':' in line:
+            src, dests_str = line.split(':', 1)
+            src = src.strip()
+            dests = [d.strip() for d in dests_str.split()]
+            graph[src] = dests
+
+    # We need to find paths from 'you' to 'out'
+    if 'you' not in graph:
+        print(0)
+        return
+
+    # Using memoization to handle potentially large number of overlapping paths (DAG)
+    memo = {}
+    result = count_paths('you', graph, memo)
+
+    print(result)
+
+
+if __name__ == '__main__':
+    sys.setrecursionlimit(20000)  # Increase recursion limit just in case
+    main()
