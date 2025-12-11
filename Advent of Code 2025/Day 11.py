@@ -32,15 +32,11 @@ def main():
         line = line.strip()
         if not line:
             continue
-
-        # Parse line: "bbb: ddd eee"
         if ':' in line:
             src, dests_str = line.split(':', 1)
             src = src.strip()
             dests = [d.strip() for d in dests_str.split()]
             graph[src] = dests
-
-    # We need to find paths from 'you' to 'out'
     if 'you' not in graph:
         print(0)
         return
