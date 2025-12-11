@@ -6,8 +6,6 @@ def count_paths(node, graph, memo):
         return 1
     if node in memo:
         return memo[node]
-
-    # If a node has no outgoing connections (dead end) and isn't 'out'
     if node not in graph:
         return 0
 
