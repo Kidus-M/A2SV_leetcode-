@@ -101,14 +101,11 @@ def solve(grid_flat, w, h, counts, all_variants, slack, start_idx):
                 for dr, dc in variant:
                     nr, nc = r + dr, c + dc
 
-                    # Boundary check
                     if not (0 <= nr < h and 0 <= nc < w):
                         fits = False
                         break
 
                     n_idx = nr * w + nc
-
-                    # Overlap check
                     if grid_flat[n_idx]:
                         fits = False
                         break
@@ -116,7 +113,6 @@ def solve(grid_flat, w, h, counts, all_variants, slack, start_idx):
                     indices_to_mark.append(n_idx)
 
                 if fits:
-                    # Place the present
                     for mark_idx in indices_to_mark:
                         grid_flat[mark_idx] = True
 
