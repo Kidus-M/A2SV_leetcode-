@@ -161,11 +161,8 @@ def main():
         w = region['w']
         h = region['h']
         counts = region['counts']
-
-        # Calculate total area required by presents
         total_present_area = 0
 
-        # Pad counts if the region list is shorter than the number of shape types
         current_counts = list(counts)
         if len(current_counts) < len(shape_areas):
             current_counts += [0] * (len(shape_areas) - len(current_counts))
@@ -174,7 +171,6 @@ def main():
             if sid < len(shape_areas):
                 total_present_area += count * shape_areas[sid]
 
-        # Immediate fail if presents are larger than region
         if total_present_area > w * h:
             continue
 
