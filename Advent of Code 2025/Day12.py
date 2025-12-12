@@ -26,9 +26,7 @@ def parse_input(content):
                     counts = list(map(int, p_counts.strip().split()))
                     regions.append({'w': w, 'h': h, 'counts': counts})
         else:
-            # It is a shape definition
             try:
-                # header might be "0:"
                 idx_str = header.split(':')[0].strip()
                 idx = int(idx_str)
                 grid_lines = lines[1:]
