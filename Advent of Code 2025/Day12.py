@@ -129,7 +129,7 @@ def solve(grid_flat, w, h, counts, all_variants, slack, start_idx):
         grid_flat[idx] = True
         if solve(grid_flat, w, h, counts, all_variants, slack - 1, idx + 1):
             return True
-        grid_flat[idx] = False  # Backtrack
+        grid_flat[idx] = False
 
     return False
 
@@ -147,7 +147,6 @@ def main():
         print(0)
         return
 
-    # Precompute all variants for all shapes
     max_id = max(shapes_raw.keys())
     all_variants = [[] for _ in range(max_id + 1)]
     shape_areas = [0] * (max_id + 1)
