@@ -19,7 +19,6 @@ def parse_input(content):
                 is_region_block = True
 
         if is_region_block:
-            # Process all lines in this block as regions
             for line in lines:
                 if ':' in line and 'x' in line:
                     p_meta, p_counts = line.split(':')
