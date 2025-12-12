@@ -66,7 +66,6 @@ def generate_variants(base_coords):
         lambda r, c: (c, -r)
     ]
 
-    # Base shape and its flipped version
     configs = [list(base_coords), [(r, -c) for r, c in base_coords]]
 
     for cfg in configs:
@@ -74,14 +73,12 @@ def generate_variants(base_coords):
             new_coords = set()
             for r, c in cfg:
                 new_coords.add(t(r, c))
-            # Normalize to ensure consistent anchor at (0,0)
             variants.add(normalize_shape(new_coords))
 
     return list(variants)
 
 
 def solve(grid_flat, w, h, counts, all_variants, slack, start_idx):
-    # Find the first empty cell in the grid
     idx = -1
     for i in range(start_idx, w * h):
         if not grid_flat[i]:
@@ -89,16 +86,12 @@ def solve(grid_flat, w, h, counts, all_variants, slack, start_idx):
             break
 
     if idx == -1:
-        # No empty cells left. Check if we have successfully placed all presents.
-        # If any count > 0, we failed to place everything.
         if any(c > 0 for c in counts):
             return False
         return True
 
-    # Current anchor position (r, c)
     r, c = divmod(idx, w)
 
-    # Branch 1: Try to place a present anchored at this cell
     for s_idx, count in enumerate(counts):
         if count > 0:
             for variant in all_variants[s_idx]:
