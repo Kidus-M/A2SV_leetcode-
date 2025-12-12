@@ -11,9 +11,6 @@ def parse_input(content):
         if not lines: continue
 
         header = lines[0]
-        # Check if it's a shape (Index:) or a region block (WxH:)
-        # Shapes start with a number followed by colon, e.g., "0:"
-        # Regions usually contain 'x' in the dimensions, e.g., "12x5:"
 
         is_region_block = False
         if ':' in header:
