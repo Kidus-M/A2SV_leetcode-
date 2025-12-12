@@ -50,7 +50,6 @@ def normalize_shape(coords):
     r0, c0 = sorted_coords[0]
     normalized = []
     for r, c in sorted_coords:
-        # Relativize all coordinates to the anchor
         normalized.append((r - r0, c - c0))
     return tuple(normalized)
 
@@ -60,8 +59,6 @@ def generate_variants(base_coords):
     if not base_coords:
         return []
 
-    # Transformations: (r, c) -> ...
-    # Rotation 0, 90, 180, 270
     transforms = [
         lambda r, c: (r, c),
         lambda r, c: (-c, r),
