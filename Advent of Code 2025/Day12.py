@@ -118,11 +118,9 @@ def solve(grid_flat, w, h, counts, all_variants, slack, start_idx):
 
                     counts[s_idx] -= 1
 
-                    # Recurse
                     if solve(grid_flat, w, h, counts, all_variants, slack, idx + 1):
                         return True
 
-                    # Backtrack (Remove the present)
                     counts[s_idx] += 1
                     for mark_idx in indices_to_mark:
                         grid_flat[mark_idx] = False
