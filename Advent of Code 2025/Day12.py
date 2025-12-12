@@ -37,14 +37,12 @@ def parse_input(content):
                             coords.add((r, c))
                 shapes[idx] = coords
             except ValueError:
-                # If header isn't an integer index, skip or handle gracefully
                 pass
 
     return shapes, regions
 
 
 def normalize_shape(coords):
-    # Sort coordinates to find the "anchor" (top-leftmost cell in reading order)
     sorted_coords = sorted(list(coords))
     if not sorted_coords:
         return tuple()
