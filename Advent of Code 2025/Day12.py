@@ -174,10 +174,8 @@ def main():
         if total_present_area > w * h:
             continue
 
-        # Calculate slack (allowed empty space)
         slack = (w * h) - total_present_area
 
-        # Initialize flat grid
         grid = [False] * (w * h)
 
         if solve(grid, w, h, current_counts, all_variants, slack, 0):
@@ -187,6 +185,5 @@ def main():
 
 
 if __name__ == '__main__':
-    # Increase recursion limit for deep search trees
     sys.setrecursionlimit(5000)
     main()
