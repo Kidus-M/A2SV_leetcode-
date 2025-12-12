@@ -125,10 +125,8 @@ def solve(grid_flat, w, h, counts, all_variants, slack, start_idx):
                     for mark_idx in indices_to_mark:
                         grid_flat[mark_idx] = False
 
-    # Branch 2: Leave this cell empty (skip it)
-    # We can only do this if we have "slack" (extra area) remaining.
     if slack > 0:
-        grid_flat[idx] = True  # Mark as "filled" (skipped)
+        grid_flat[idx] = True
         if solve(grid_flat, w, h, counts, all_variants, slack - 1, idx + 1):
             return True
         grid_flat[idx] = False  # Backtrack
