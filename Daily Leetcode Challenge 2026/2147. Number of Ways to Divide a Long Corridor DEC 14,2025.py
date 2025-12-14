@@ -1,7 +1,6 @@
 class Solution:
     def numberOfWays(self, corridor: str) -> int:
         mod = 10**9 + 7
-
         total_seats = corridor.count("S")
         if total_seats == 0 or total_seats % 2 == 1:
             return 0
