@@ -5,6 +5,5 @@ class Solution:
 
         for i, c in enumerate(capacity):
             total -= c
-
             if(total <= 0):
                 return i + 1
