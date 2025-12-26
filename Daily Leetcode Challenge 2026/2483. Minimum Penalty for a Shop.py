@@ -3,7 +3,6 @@ class Solution:
         bestTime = 0
         minPenalty = 0
         prefix = 0
-
         for i in range(len(customers)):
             prefix += -1 if customers[i] == 'Y' else 1
             if prefix < minPenalty:
