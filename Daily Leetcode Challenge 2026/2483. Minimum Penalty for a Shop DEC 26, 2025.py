@@ -9,4 +9,3 @@ class Solution:
                 bestTime = i + 1
                 minPenalty = prefix
         return bestTime
-
