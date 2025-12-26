@@ -10,5 +10,4 @@ class Solution:
             if prefix < minPenalty:
                 bestTime = i + 1
                 minPenalty = prefix
-
         return bestTime
