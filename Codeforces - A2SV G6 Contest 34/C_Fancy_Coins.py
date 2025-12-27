@@ -5,9 +5,14 @@ input = sys.stdin.readline
 t = int(input())
 for _ in range(t):
     m, k, a1, ak = map(int, input().split())
-    use_k = min(ak, m // k)
-    m -= use_k * k
-    use_1 = min(a1, m)
-    m -= use_1
-    fancy = (m + k - 1) // k
-    print(fancy)
+    used_ak = min(m // k, ak)
+    m -= used_ak * k
+    if a1 >= m:
+        print(0)
+        continue
+    remainder = m % k
+    fancy_1_needed = max(0, remainder - a1)
+    a1_left = max(0, a1 - remainder)
+    k_chunks_needed = (m - remainder) // k
+    fancy_k_needed = k_chunks_needed - (a1_left // k)
+    print(fancy_1_needed + fancy_k_needed)
