@@ -16,6 +16,5 @@ class Solution:
             else:
                 t, r = heappop(rooms)
                 heappush(rooms, [t + e - s, r])
-
             res[r] += 1
         return res.index(max(res))
