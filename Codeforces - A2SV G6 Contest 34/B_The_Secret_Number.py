@@ -1,3 +1,0 @@
-// B.The
-Secret
-Number
