@@ -9,7 +9,6 @@ class Solution:
             while rooms and rooms[0][0] <= s:
                 t, r = heappop(rooms)
                 heappush(ready, r)
-
             if ready:
                 r = heappop(ready)
                 heappush(rooms, [e, r])
