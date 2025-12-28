@@ -7,11 +7,9 @@ for _ in range(t):
     n, m, k = map(int, input().split())
     a = list(map(int, input().split()))
     b = list(map(int, input().split()))
-
     cnt_b = {}
     for x in b:
         cnt_b[x] = cnt_b.get(x, 0) + 1
-
     cnt_w = {}
     matches = 0
     ans = 0
