@@ -15,8 +15,6 @@ for _ in range(t):
     cnt_w = {}
     matches = 0
     ans = 0
-
-    # Initial window
     for i in range(m):
         x = a[i]
         if x in cnt_b:
@@ -26,8 +24,6 @@ for _ in range(t):
 
     if matches >= k:
         ans += 1
-
-    # Sliding window
     for i in range(m, n):
         add = a[i]
         rem = a[i - m]
@@ -44,5 +40,4 @@ for _ in range(t):
 
         if matches >= k:
             ans += 1
-
     print(ans)
