@@ -7,4 +7,3 @@ class Solution:
             A, B = (2*A + 2*B) % MOD, (2*A + 3*B) % MOD
 
         return (A + B) % MOD
-
