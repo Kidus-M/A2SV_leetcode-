@@ -9,4 +9,4 @@ for _ in range(t):
     freq = Counter(a)
     mx = max(freq.values())
 
-    print(max(0, 2 * mx - n))
+    print(max(n % 2, 2 * mx - n))
