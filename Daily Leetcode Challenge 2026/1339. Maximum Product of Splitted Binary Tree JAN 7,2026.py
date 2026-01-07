@@ -7,6 +7,7 @@
 class Solution:
     def maxProduct(self, root: Optional[TreeNode]) -> int:
         ans, total=-inf, 0
+
         def dfs(root):
             nonlocal ans, total
             if not root: return 0
