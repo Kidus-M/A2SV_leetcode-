@@ -4,6 +4,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def maxProduct(self, root: Optional[TreeNode]) -> int:
         ans, total=-inf, 0
