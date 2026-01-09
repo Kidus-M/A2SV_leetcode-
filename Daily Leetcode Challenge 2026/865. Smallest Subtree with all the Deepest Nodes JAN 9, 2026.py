@@ -17,4 +17,5 @@ class Solution:
                 return (rd + 1, rn)
             else:
                 return (ld + 1, node)
+
         return dfs(root)[1]
