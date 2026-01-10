@@ -10,7 +10,7 @@ for _ in range(t):
         pos[a[i]] = i
 
     offline = 0
-    last = n  # larger than any index
+    last = n
 
     for i in range(n - 1, -1, -1):
         if pos[b[i]] < last:
