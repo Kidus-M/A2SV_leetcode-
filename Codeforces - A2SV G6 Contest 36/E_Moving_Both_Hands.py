@@ -1,6 +1,7 @@
 import heapq
 import sys
 
+input=sys.stdin.readline
 n, m = map(int, input().split())
 
 adj = [[] for _ in range(2 * n + 1)]
