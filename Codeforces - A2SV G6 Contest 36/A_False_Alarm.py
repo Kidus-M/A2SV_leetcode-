@@ -4,17 +4,12 @@ for _ in range(t):
     n, x = map(int, input().split())
     a = list(map(int, input().split()))
 
-    max_closed = 0
-    current = 0
+    closed = [i for i in range(n) if a[i] == 1]
 
-    for door in a:
-        if door == 1:
-            current += 1
-            max_closed = max(max_closed, current)
-        else:
-            current = 0
+    first = closed[0]
+    last = closed[-1]
 
-    if max_closed <= x:
+    if last - first + 1 <= x:
         print("YES")
     else:
         print("NO")
