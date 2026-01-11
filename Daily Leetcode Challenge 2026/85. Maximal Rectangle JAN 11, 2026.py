@@ -17,11 +17,9 @@ class Solution:
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
         if not matrix:
             return 0
-
         m, n = len(matrix), len(matrix[0])
         hist = [0] * n
         ans = 0
-
         for i in range(m):
             for j in range(n):
                 if matrix[i][j] == '1':
