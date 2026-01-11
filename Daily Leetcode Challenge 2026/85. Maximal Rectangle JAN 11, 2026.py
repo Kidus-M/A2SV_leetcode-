@@ -3,7 +3,6 @@ class Solution:
         stack = []
         maxArea = 0
         n = len(heights)
-
         for i in range(n + 1):
             h = 0 if i == n else heights[i]
             while stack and h < heights[stack[-1]]:
@@ -11,7 +10,6 @@ class Solution:
                 width = i if not stack else i - stack[-1] - 1
                 maxArea = max(maxArea, height * width)
             stack.append(i)
-
         return maxArea
 
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
