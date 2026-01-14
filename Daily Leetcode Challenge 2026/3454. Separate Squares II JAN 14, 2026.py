@@ -35,12 +35,10 @@ class Solution:
             else:
                 xs.remove((x1, x2))
             prev_y = y
-
         half = total / 2
         acc = 0
         for y, h, w in areas:
             if acc + h * w >= half:
                 return y + (half - acc) / w
             acc += h * w
-
         return 0.0
