@@ -21,7 +21,6 @@ class Solution:
                     res += b - end
                     end = b
             return res
-
         for y, typ, x1, x2 in events:
             if y > prev_y and xs:
                 h = y - prev_y
