@@ -4,13 +4,11 @@ class Solution:
         for x, y, l in squares:
             events.append((y, 1, x, x + l))
             events.append((y + l, -1, x, x + l))
-
         events.sort()
         xs = []
         prev_y = events[0][0]
         total = 0
         areas = []
-
         def union_len(intervals):
             intervals.sort()
             res = cur = 0
