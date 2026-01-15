@@ -11,5 +11,4 @@ class Solution:
                     streak = 1
                 res = max(res, streak)
             return res + 1
-
         return min(maxSpan(hBars), maxSpan(vBars)) ** 2
