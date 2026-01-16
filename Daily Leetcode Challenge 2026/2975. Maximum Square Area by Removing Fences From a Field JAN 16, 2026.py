@@ -7,7 +7,6 @@ class Solution:
         for i in range(len(h)):
             for j in range(i + 1, len(h)):
                 hashSet.add(h[j] - h[i])
-
         max_area = -1
         for i in range(len(v)):
             for j in range(i + 1, len(v)):
