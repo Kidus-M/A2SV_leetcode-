@@ -4,7 +4,6 @@ class Solution:
         ans = 0
         for i in range(n):
             for j in range(i + 1, n):
-
                 left   = max(bottomLeft[i][0], bottomLeft[j][0])
                 right  = min(topRight[i][0], topRight[j][0])
                 bottom = max(bottomLeft[i][1], bottomLeft[j][1])
