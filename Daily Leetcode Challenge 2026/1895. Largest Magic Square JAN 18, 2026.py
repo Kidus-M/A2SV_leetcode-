@@ -1,9 +1,7 @@
 class Solution:
     def largestMagicSquare(self, grid: List[List[int]]) -> int:
         r, c= len(grid), len(grid[0])
-
         rowSum=[list(accumulate(row, initial=0)) for row in grid]
-        # use tranpose matrix trick
         colSum=[list(accumulate(col, initial=0)) for col in zip(*grid)]
 
         diag, antidiag=([[0]*(c+1) for _ in range(r+1)] for _ in range(2))
