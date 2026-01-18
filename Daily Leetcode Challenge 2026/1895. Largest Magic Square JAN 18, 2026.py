@@ -14,18 +14,15 @@ class Solution:
                     Sum=diag[i+k][j+k]-diag[i][j]
                     antiD=antidiag[i+k][j]-antidiag[i][j+k]
                     match=(Sum==antiD)
-
                     for m in range(k):
                         if not match: break
                         match=(
                             Sum==rowSum[i+m][j+k]-rowSum[i+m][j]
                             and Sum==colSum[j+m][i+k]-colSum[j+m][i]
                         )
-
                     if match:
                         return True
             return False
-
         for k in range(min(r, c), 1, -1):
             if isMagic(k): return k
         return 1
