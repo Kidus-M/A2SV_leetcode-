@@ -8,7 +8,7 @@ class Solution:
         for i in range(n):
             for j in range(m):
                 px[i][j] = mat[i][j]
-        
+
         for i in range(n):
             for j in range(m):
                 px[i][j] = mat[i][j]
@@ -18,15 +18,12 @@ class Solution:
                     px[i][j] += px[i][j-1]
                 if i > 0 and j > 0:
                     px[i][j] -= px[i-1][j-1]
-
         maxi = 0
-        
         for i in range(n):
             for j in range(m):
                 x = i + maxi
                 y = j + maxi 
                 while x < n and y < m:
-  
                     sum = px[x][y]
                     if i-1 >= 0:
                         sum -= px[i-1][y]
