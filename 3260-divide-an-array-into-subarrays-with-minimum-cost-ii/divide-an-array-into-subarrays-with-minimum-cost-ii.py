@@ -1,65 +1,49 @@
 class Solution:
-    class SmartWindow:
-        def __init__(self, k: int):
-            self.K = k
-            self.low = []   
-            self.high = []  
-            self.sumLow = 0
-
-        def windowSize(self) -> int:
-            return len(self.low) + len(self.high)
-
-        def _erase_one(self, arr: List[int], x: int) -> bool:
-            i = bisect_left(arr, x)
-            if i < len(arr) and arr[i] == x:
-                arr.pop(i)
-                return True
-            return False
-
-        def rebalance(self) -> None:
-            need = min(self.K, self.windowSize())
-
-            while len(self.low) > need:
-                x = self.low.pop() 
-                self.sumLow -= x
-                insort(self.high, x)
-
-            while len(self.low) < need and self.high:
-                x = self.high.pop(0)  
-                insort(self.low, x)
-                self.sumLow += x
-
-        def add(self, x: int) -> None:
-            if not self.low or x <= self.low[-1]:
-                insort(self.low, x)
-                self.sumLow += x
-            else:
-                insort(self.high, x)
-            self.rebalance()
-
-        def remove(self, x: int) -> None:
-            if self._erase_one(self.low, x):
-                self.sumLow -= x
-            else:
-                self._erase_one(self.high, x)
-            self.rebalance()
-
-        def query(self) -> int:
-            return self.sumLow
-
     def minimumCost(self, nums: List[int], k: int, dist: int) -> int:
-        n = len(nums)
+        
+        def move_from_left_to_right():
+            nonlocal current_sum
+            element = left_set.pop()
+            current_sum -= element 
+            right_set.add(element)
+
+        def move_from_right_to_left():
+            nonlocal current_sum
+            element = right_set.pop(0)
+            left_set.add(element)
+            current_sum += element 
+
         k -= 1
-        window = self.SmartWindow(k)
 
-        for i in range(1, 1 + dist + 1):
-            window.add(nums[i])
+        current_sum = sum(nums[:dist + 2])
+        left_set = SortedList(nums[1:dist + 2])
+        right_set = SortedList()
 
-        ans = window.query()
+        while len(left_set) > k:
+            move_from_left_to_right()
 
-        for i in range(2, n - dist):
-            window.remove(nums[i - 1])
-            window.add(nums[i + dist])
-            ans = min(ans, window.query())
+        min_cost = current_sum 
 
-        return ans + nums[0]
+        for i in range(dist + 2, len(nums)):
+            outgoing_element = nums[i - dist - 1]
+            if outgoing_element in left_set:
+                left_set.remove(outgoing_element)
+                current_sum -= outgoing_element
+            else:
+                right_set.remove(outgoing_element)
+
+            incoming_element = nums[i]
+            if left_set and incoming_element < left_set[-1]:
+                left_set.add(incoming_element)
+                current_sum += incoming_element
+            else:
+                right_set.add(incoming_element)
+
+            while len(left_set) < k:
+                move_from_right_to_left()
+            while len(left_set) > k:
+                move_from_left_to_right()
+
+            min_cost = min(min_cost, current_sum)
+
+        return min_cost 
