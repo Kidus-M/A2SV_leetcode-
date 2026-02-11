@@ -9,6 +9,8 @@ def is_in_square(x1, y1, half_d1, x2, y2):
 
 
 
+
+
 def dfs_first(graph, node, visited, finish):
     visited[node] = True
     for neighbor in graph[node]:
