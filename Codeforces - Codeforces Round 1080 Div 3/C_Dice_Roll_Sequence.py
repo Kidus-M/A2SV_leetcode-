@@ -1,15 +1,15 @@
 import sys
 
 input = sys.stdin.readline
-INF = 10**9
+INF = float("inf")
+
+t = int(input())
 
 adj = [[] for _ in range(7)]
 for i in range(1, 7):
     for j in range(1, 7):
         if i != j and i + j != 7:
             adj[i].append(j)
-
-t = int(input())
 
 for _ in range(t):
     n = int(input())
