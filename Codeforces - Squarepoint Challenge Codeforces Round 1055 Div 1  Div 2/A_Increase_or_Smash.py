@@ -6,3 +6,4 @@ for _ in range(t):
 
     distinct_values = len(set(a))
     print(2 * distinct_values - 1)
+    
