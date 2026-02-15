@@ -20,6 +20,7 @@ for _ in range(t):
         known += a[i] * i
 
     a[n - 1] = (f[0] - known) // (n - 1)
+    #print(a[n-1])
     a[0] = d[0] + mid_sum + a[n - 1]
 
     print(*a)
