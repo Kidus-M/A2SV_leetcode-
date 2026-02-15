@@ -2,11 +2,6 @@ import sys
 
 input = sys.stdin.readline
 
-t = int(input())
-
-a = list(range(200001))
-sz = [1] * 200001
-
 def find(x):
     while a[x] != x:
         a[x] = a[a[x]]
@@ -22,6 +17,11 @@ def union(x, y):
         a[y] = x
         sz[x] += sz[y]
 
+t = int(input())
+
+a = list(range(200001))
+sz = [1] * 200001
+
 for _ in range(t):
     n = int(input())
     arr = list(map(int, input().split()))
@@ -34,17 +34,18 @@ for _ in range(t):
         if i * 2 <= n:
             union(i, i * 2)
 
-    pos = {}
-    val = {}
+    grp = {}
 
     for i in range(1, n + 1):
         r = find(i)
-        pos.setdefault(r, []).append(i)
-        val.setdefault(r, []).append(arr[i - 1])
+        if r not in grp:
+            grp[r] = [[], []]
+        grp[r][0].append(i)
+        grp[r][1].append(arr[i - 1])
 
     ok = True
-    for r in pos:
-        if sorted(pos[r]) != sorted(val[r]):
+    for g in grp.values():
+        if sorted(g[0]) != sorted(g[1]):
             ok = False
             break
 
