@@ -3,13 +3,27 @@ for _ in range(t):
     n = int(input())
     s = input().strip()
 
-    ones = [str(i + 1) for i in range(n) if s[i] == '1']
+    c1 = s.count('1')
+    c0 = n - c1
 
-    if len(ones) % 2 == 1:
-        print(-1)
+    if c1 % 2 == 0:
+        ans = []
+        i = 0
+        while i < n:
+            if s[i] == '1':
+                ans.append(str(i + 1))
+            i += 1
+        print(len(ans))
+        if ans:
+            print(" ".join(ans))
+    elif c0 % 2 == 1:
+        ans = []
+        i = 0
+        while i < n:
+            if s[i] == '0':
+                ans.append(str(i + 1))
+            i += 1
+        print(len(ans))
+        print(" ".join(ans))
     else:
-        print(len(ones))
-        if ones:
-            print(' '.join(sorted(ones)))
-        else:
-            print(end='') 
+        print(-1)
