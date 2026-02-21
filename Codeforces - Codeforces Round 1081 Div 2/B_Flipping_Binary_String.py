@@ -1,30 +1,15 @@
 t = int(input())
 for _ in range(t):
     n = int(input())
-    s = input()
+    s = input().strip()
 
-    a = []
-    b = []
+    ones = [str(i + 1) for i in range(n) if s[i] == '1']
 
-    i = 0
-    while i < n:
-        if s[i] == '1':
-            a.append(i + 1)
-        else:
-            b.append(i + 1)
-        i += 1
-
-    if len(a) % 2 == 0:
-        print(len(a))
-        if len(a):
-            print(*a)
-        else:
-            print()
-    elif len(b) % 2 == 1:
-        print(len(b))
-        if len(b):
-            print(*b)
-        else:
-            print()
-    else:
+    if len(ones) % 2 == 1:
         print(-1)
+    else:
+        print(len(ones))
+        if ones:
+            print(' '.join(sorted(ones)))
+        else:
+            print(end='') 
