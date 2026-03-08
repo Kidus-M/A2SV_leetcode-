@@ -1,53 +1,55 @@
 import sys
 
-
-def solve():
-    # Read all input at once and split by whitespace
-    input_data = sys.stdin.read().split()
-    if not input_data:
+def solve() -> None:
+    data = sys.stdin.read().split()
+    if not data:
         return
-
-    ptr = 0
-    t = int(input_data[ptr])
-    ptr += 1
-
-    results = []
-
+    t = int(data[0])
+    idx = 1
+    out_lines = []
     for _ in range(t):
-        n = int(input_data[ptr])
-        k = int(input_data[ptr + 1])
-        m = int(input_data[ptr + 2])
-        ptr += 3
+        n = int(data[idx]); m = int(data[idx+1]); l = int(data[idx+2])
+        idx += 3
+        a = [int(data[idx+i]) for i in range(n)]
+        idx += n
+        reset_times = set(a)
 
-        # Read the array 'a'
-        a = []
-        for i in range(n):
-            a.append(int(input_data[ptr]))
-            ptr += 1
+        dangers = [0] * m
 
-        a.sort()
+        for sec in range(1, l + 1):
+            # find the largest and the second largest danger
+            max_val = -1
+            second_val = -1
+            max_idx = 0
+            second_idx = 0
+            for i in range(m):
+                if dangers[i] > max_val:
+                    second_val = max_val
+                    second_idx = max_idx
+                    max_val = dangers[i]
+                    max_idx = i
+                elif dangers[i] > second_val:
+                    second_val = dangers[i]
+                    second_idx = i
 
-        ans = 0
+            # adversary increments the second largest
+            dangers[second_idx] += 1
 
-        # 1. Handle the gap from the beginning (1 to a[0])
-        if a[0] > 1:
-            ans += (a[0] - 1) // k
+            # our turn: if this second is a reset time, reset the largest
+            if sec in reset_times:
+                # find the largest again (it may have changed)
+                max_val = -1
+                max_idx = 0
+                for i in range(m):
+                    if dangers[i] > max_val:
+                        max_val = dangers[i]
+                        max_idx = i
+                dangers[max_idx] = 0
 
-        # 2. Handle the gaps between elements in the array
-        for i in range(1, n):
-            gap = a[i] - a[i - 1] - 1
-            if gap > 0:
-                ans += gap // k
+        answer = max(dangers)
+        out_lines.append(str(answer))
 
-        # 3. Handle the gap from the last element to m
-        if m > a[n - 1]:
-            ans += (m - a[n - 1]) // k
-
-        results.append(str(ans))
-
-    # Print all results at once for speed
-    sys.stdout.write("\n".join(results) + "\n")
-
+    sys.stdout.write("\n".join(out_lines))
 
 if __name__ == "__main__":
     solve()
