@@ -1,97 +1,71 @@
 from collections import deque
 
 t = int(input())
+P = [1 << i for i in range(8005)]
+
 for _ in range(t):
     n = int(input())
-    r = []
-    for i in range(n):
-        s = input().strip()
-        r.append([int(c) for c in s])
+    rows = [input().strip() for _ in range(n)]
 
-    ok = True
+    valid = True
     for i in range(n):
-        if r[i][i] != 1:
-            ok = False
-        for j in range(i + 1, n):
-            if r[i][j] and r[j][i]:
-                ok = False
-    if not ok:
+        if rows[i][i] != '1':
+            valid = False
+            break
+    if not valid:
         print("No")
         continue
 
-    g = [[] for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            if i != j and r[i][j]:
-                g[i].append(j)
+    masks = [int(rows[i][::-1], 2) for i in range(n)]
+    D = [rows[i].count('1') for i in range(n)]
 
-    e = []
-    for i in range(n):
-        d = g[i][:]
-        d.append(i)
-        for v in g[i]:
-            f = 1
-            for w in d:
-                if w != i and w != v and r[w][v]:
-                    f = 0
+    edges = []
+
+    for u in range(n):
+        c = masks[u] & ~P[u]
+        a = [j for j in range(n) if rows[u][j] == '1' and j != u]
+        a.sort(key=lambda x: D[x], reverse=True)
+
+        for v in a:
+            if c & P[v]:
+                if (masks[u] & masks[v]) != masks[v]:
+                    valid = False
                     break
-            if f:
-                e.append((i + 1, v + 1))
+                edges.append((u, v))
+                if len(edges) >= n:
+                    valid = False
+                    break
+                c &= ~masks[v]
 
-    if len(e) != n - 1:
+        if not valid or c != 0:
+            valid = False
+            break
+
+    if not valid or len(edges) != n - 1:
         print("No")
         continue
 
-    d = [[] for _ in range(n)]
-    u = [[] for _ in range(n)]
-    for x, y in e:
-        a = x - 1
-        b = y - 1
-        d[a].append(b)
-        u[a].append(b)
-        u[b].append(a)
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
 
     vis = [0] * n
     q = deque([0])
     vis[0] = 1
     cnt = 1
+
     while q:
-        x = q.popleft()
-        for y in u[x]:
-            if not vis[y]:
-                vis[y] = 1
-                q.append(y)
+        cur = q.popleft()
+        for nxt in adj[cur]:
+            if not vis[nxt]:
+                vis[nxt] = 1
+                q.append(nxt)
                 cnt += 1
 
     if cnt != n:
         print("No")
-        continue
-
-    def go(s):
-        v = [0] * n
-        q = deque([s])
-        v[s] = 1
-        while q:
-            x = q.popleft()
-            for y in d[x]:
-                if not v[y]:
-                    v[y] = 1
-                    q.append(y)
-        return v
-
-    good = True
-    for i in range(n):
-        v = go(i)
-        for j in range(n):
-            if v[j] != (r[i][j] == 1):
-                good = False
-                break
-        if not good:
-            break
-
-    if good:
-        print("Yes")
-        for x, y in e:
-            print(x, y)
     else:
-        print("No")
+        print("Yes")
+        for u, v in edges:
+            print(u + 1, v + 1)
