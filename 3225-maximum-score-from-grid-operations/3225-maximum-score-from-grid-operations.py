@@ -1,40 +1,53 @@
 class Solution:
-    def maximumScore(self, grid: List[List[int]]) -> int:
-        
+    def maximumScore(self, grid: list[list[int]]) -> int:
+        n = len(grid)
+        pref = [[0] * (n + 1) for _ in range(n)]
+        for j in range(n):
+            for i in range(n):
+                pref[j][i + 1] = pref[j][i] + grid[i][j]
 
-        prefix = [[0] * (len(grid) + 1)]
+        dp = [[-float('inf')] * (n + 1) for _ in range(2)]
+        for h in range(n + 1):
+            dp[0][h] = 0
 
-        for i in range(len(grid) + 1):
-            prefix.append([0] * (len(grid) + 1))
-
-        for i in range(len(grid)):
-            sm = 0
-            for j in range(len(grid[0])):
-                sm += grid[j][i]
-                prefix[j + 1][i] = sm
-
-        @cache
-        def dp(col, prev, flag):
-
-            if col >= len(grid):
-                return 0
+        for j in range(1, n):
+            new_dp = [[-float('inf')] * (n + 1) for _ in range(2)]
             
-            ans = 0 
+            p_max = -float('inf')
+            for h in range(n + 1):
+                p_max = max(p_max, dp[0][h] - pref[j-1][h])
+                new_dp[0][h] = max(new_dp[0][h], p_max + pref[j-1][h])
             
-            for i in range(0, len(grid) + 1):
-                if prev > i:
-                    sm = 0
-                    sm = (prefix[prev][col] - prefix[i][col])
-                    ans = max(ans, sm + dp(col + 1, i, True))
-                elif i > prev and not flag and col > 0:
-                    sm_prev = 0
-                    sm_prev = (prefix[i][col - 1] - prefix[prev][col - 1])
-                    ans = max(ans, sm_prev + dp(col + 1, i, False))
-                else:
-                    ans = max(ans, 0 + dp(col + 1, i, False))
+            p_max = -float('inf')
+            for h in range(n, -1, -1):
+                p_max = max(p_max, dp[0][h], dp[1][h])
+                new_dp[1][h] = max(new_dp[1][h], p_max + pref[j][h] - pref[j][h]) 
 
-            return ans         
+            p_max = -float('inf')
+            for h in range(n, -1, -1):
+                p_max = max(p_max, dp[0][h], dp[1][h])
+                if h < n + 1:
+                    new_dp[0][0] = max(new_dp[0][0], p_max)
 
-        tmp = dp(0, 0, True)
-        dp.cache_clear()
-        return (tmp)
+            p_max = -float('inf')
+            for h in range(n, -1, -1):
+                p_max = max(p_max, dp[0][h] + pref[j][h], dp[1][h] + pref[j][h])
+                new_dp[1][h] = max(new_dp[1][h], p_max - pref[j][h])
+            
+            p_max = -float('inf')
+            for h in range(n + 1):
+                p_max = max(p_max, dp[1][h])
+                new_dp[1][h] = max(new_dp[1][h], p_max)
+
+            p_max = -float('inf')
+            for h in range(n + 1):
+                p_max = max(p_max, dp[0][h], dp[1][h])
+                new_dp[0][h] = max(new_dp[0][h], p_max)
+                
+            dp = new_dp
+
+        res = 0
+        for state in range(2):
+            for h in range(n + 1):
+                res = max(res, dp[state][h])
+        return res
