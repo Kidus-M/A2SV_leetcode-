@@ -12,7 +12,6 @@ for _ in range(t):
         if h>1:
             sm[h]=sm.get(h,0)+v
     hs=list(sm)
-
     reach={x}
     st=[x]
     while st:
